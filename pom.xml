@@ -121,6 +121,13 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/neo4j-jdbc-driver-3.3.1.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.2</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
