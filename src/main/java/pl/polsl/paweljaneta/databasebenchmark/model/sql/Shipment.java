@@ -4,18 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Shipment {
+public class Shipment implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    private Long orderId;
+    @OneToOne
+    @JoinColumn(name = "orderId",referencedColumnName = "id")
     private Order order;
     private String tracingNumber;
     private String shipmentDetails;
