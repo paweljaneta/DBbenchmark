@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@Table(schema = "public", name = "CART")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +20,7 @@ public class Cart implements Serializable {
     private Long id;
     private Client client;
 
-    private List<Product> products;
+//    private List<Product> products;
 
    /* protected Cart(){}
 

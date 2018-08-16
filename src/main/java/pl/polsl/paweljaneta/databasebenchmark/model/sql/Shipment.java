@@ -15,7 +15,6 @@ public class Shipment implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    private Long orderId;
     @OneToOne
     @JoinColumn(name = "orderId",referencedColumnName = "id")
     private Order order;

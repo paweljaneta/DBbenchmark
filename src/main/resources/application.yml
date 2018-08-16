@@ -1,4 +1,28 @@
 spring:
   application:
     name: demo
-spring.datasource.
+  jpa:
+    show_sql: true
+    hibernate:
+      ddl-auto: create
+      use-new-id-generator-mappings: true
+
+    database: POSTGRESQL
+    generate-ddl: true
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    url: jdbc:postgresql://localhost:10000/benchmarkDB
+    username: application
+    password: application
+    driver-class-name: org.postgresql.Driver
+    name: benchmarkDB
+
+server:
+  port: 9000
+

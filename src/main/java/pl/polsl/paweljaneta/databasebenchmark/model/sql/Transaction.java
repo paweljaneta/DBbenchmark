@@ -5,9 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.polsl.paweljaneta.databasebenchmark.model.DeliveryMode;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,6 +18,8 @@ public class Transaction implements Serializable {
     @GeneratedValue
     private Long id;
     private Store store;
+    @OneToMany
+    @JoinColumn(name = "productId", referencedColumnName = "id")
     private List<Product> products;
     private DeliveryMode deliveryMode;
 }

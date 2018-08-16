@@ -1,3 +1,4 @@
+/*
 package pl.polsl.paweljaneta.databasebenchmark.databaseConnections;
 
 import com.mongodb.MongoClient;
@@ -11,3 +12,4 @@ public class MongoDBConnection {
         this.mongoClient = new MongoClient( "localhost" , 27017 );
     }
 }
+*/

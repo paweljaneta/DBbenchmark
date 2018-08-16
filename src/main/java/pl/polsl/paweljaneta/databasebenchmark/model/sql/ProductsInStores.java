@@ -17,7 +17,9 @@ import java.io.Serializable;
 @IdClass(ProductsInStoresPK.class)
 public class ProductsInStores implements Serializable {
 
+    @Id
     private Long storeId;
+    @Id
     private Long productId;
     private Long quantity;
 }

@@ -1,3 +1,4 @@
+/*
 package pl.polsl.paweljaneta.databasebenchmark.databaseConnections;
 
 import org.springframework.stereotype.Component;
@@ -18,3 +19,4 @@ public class OracleConnection { //TODO: NOT WORKING!!!
         }
     }
 }
+*/

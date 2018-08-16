@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(schema = "public", name = "CLIENT")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,7 +20,6 @@ public class Client implements Serializable {
     private String name;
     private String phoneNumber;
     private String email;
-    private Long addressId;
     @OneToOne
     @JoinColumn(name = "addressId",referencedColumnName = "id")
     private Address address;

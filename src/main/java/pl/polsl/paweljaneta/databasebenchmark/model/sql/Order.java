@@ -4,14 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
+@Table(name = "ORDERS")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order implements Serializable {
@@ -19,6 +18,10 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    private List<Product> products;
+//    @OneToMany
+//    @JoinColumn
+//    private List<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "clientId", referencedColumnName = "id")
     private Client client;
 }

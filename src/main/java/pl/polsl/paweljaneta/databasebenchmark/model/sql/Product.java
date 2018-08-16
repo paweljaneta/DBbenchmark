@@ -18,7 +18,6 @@ public class Product implements Serializable {
     private Long id;
     private String name;
     private float price;
-    private Long discountId;
     @ManyToOne
     @JoinColumn(name = "discountId",referencedColumnName = "id")
     private Discount discount;
