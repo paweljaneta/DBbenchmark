@@ -22,7 +22,15 @@ spring:
     password: application
     driver-class-name: org.postgresql.Driver
     name: benchmarkDB
+  data:
+    mongodb:
+      uri: mongodb://localhost:10002/
+      port: 10002
+      database: benchmarkDB
+    neo4j:
+      uri: bolt://localhost:10003/benchmarkDB
+      username: neo4j
+      password: admin
 
 server:
   port: 9000
-

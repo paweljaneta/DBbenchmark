@@ -1,12 +1,11 @@
 package pl.polsl.paweljaneta.databasebenchmark.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.polsl.paweljaneta.databasebenchmark.model.sql.Address;
-import pl.polsl.paweljaneta.databasebenchmark.repository.AddressRepository;
+import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.Address;
+import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.AddressRepository;
 
 @Controller
 @RequestMapping("/rest")
@@ -21,9 +20,12 @@ public class GetVersion {
 
     @GetMapping(path = "/version")
     public String getVersion(){
-        System.setProperty("dupa", "0");
+        Address address = new Address();
+        address.setPostalCode("111-11");
+        address.setCity("Sosnowjec");
+        address.setStreet("wiejska");
+        addressRepository.save(address);
         Long count = addressRepository.count();
-        System.setProperty("dupa", "1");
         count = addressRepository.count();
         return count.toString();
     }

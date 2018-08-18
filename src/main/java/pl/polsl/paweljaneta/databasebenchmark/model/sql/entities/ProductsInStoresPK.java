@@ -1,4 +1,4 @@
-package pl.polsl.paweljaneta.databasebenchmark.model.sql;
+package pl.polsl.paweljaneta.databasebenchmark.model.sql.entities;
 
 import lombok.Data;
 
