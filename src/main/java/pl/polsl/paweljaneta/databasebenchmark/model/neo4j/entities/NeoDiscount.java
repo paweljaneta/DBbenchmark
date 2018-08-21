@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@NodeEntity
+@NodeEntity(label = "discount")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

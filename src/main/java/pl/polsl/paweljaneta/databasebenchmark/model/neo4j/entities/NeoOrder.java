@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@NodeEntity
+@NodeEntity(label = "order")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

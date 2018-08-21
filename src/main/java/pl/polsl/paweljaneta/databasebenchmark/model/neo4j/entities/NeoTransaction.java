@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@NodeEntity
+@NodeEntity(label = "transaction")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

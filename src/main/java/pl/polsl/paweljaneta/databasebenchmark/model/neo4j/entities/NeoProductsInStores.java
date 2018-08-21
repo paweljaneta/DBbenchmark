@@ -11,7 +11,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@NodeEntity
+@NodeEntity(label = "productsInStores")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

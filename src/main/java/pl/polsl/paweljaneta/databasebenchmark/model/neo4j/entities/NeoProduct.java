@@ -8,7 +8,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@NodeEntity
+@NodeEntity(label = "product")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

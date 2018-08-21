@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-@NodeEntity
+@NodeEntity(label = "client")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
