@@ -16,10 +16,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NeoProductsInStores implements Serializable {
-
     @Id
-    private Long storeId;
-    @Id
-    private Long productId;
+    private Long id;
+    private NeoStore store;
+    private NeoProduct product;
     private Long quantity;
 }

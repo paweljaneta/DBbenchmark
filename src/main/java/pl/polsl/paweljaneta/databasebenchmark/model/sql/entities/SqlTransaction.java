@@ -17,10 +17,12 @@ import java.util.List;
 public class SqlTransaction implements Serializable {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long transactionId;
     private SqlStore store;
-    @OneToMany
-    @JoinColumn(name = "productId", referencedColumnName = "id")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "TRANSACTION_PRODUCT", joinColumns = {
+            @JoinColumn(name = "transactionId", referencedColumnName = "transactionId")},
+            inverseJoinColumns = @JoinColumn(name = "productId", referencedColumnName = "productId"))
     private List<SqlProduct> products;
     private DeliveryMode deliveryMode;
 }

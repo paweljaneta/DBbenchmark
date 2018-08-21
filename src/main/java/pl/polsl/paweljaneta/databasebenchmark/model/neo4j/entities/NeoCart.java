@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,5 +20,6 @@ public class NeoCart implements Serializable {
     @GeneratedValue
     private Long id;
     private NeoClient client;
+    @Relationship(type = "PRODUCTS_IN_CART", direction = Relationship.UNDIRECTED)
     private List<NeoProduct> products;
 }

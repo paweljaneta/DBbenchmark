@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,5 +20,6 @@ public class NeoDiscount implements Serializable {
     @GeneratedValue
     private Long id;
     private float discountValue;
+    @Relationship(type = "DISCOUNTS_IN_PRODUCTS", direction = Relationship.UNDIRECTED)
     private Set<NeoProduct> products;
 }

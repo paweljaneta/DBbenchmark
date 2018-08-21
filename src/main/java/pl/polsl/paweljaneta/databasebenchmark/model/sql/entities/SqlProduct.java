@@ -25,6 +25,9 @@ public class SqlProduct implements Serializable {
     private SqlDiscount discount;
 
     @ManyToMany(mappedBy = "products")
+    private List<SqlTransaction> transactions;
+
+    @ManyToMany(mappedBy = "products")
     private List<SqlCart> carts;
     @ManyToMany(mappedBy = "products")
     private List<SqlOrder> orders;

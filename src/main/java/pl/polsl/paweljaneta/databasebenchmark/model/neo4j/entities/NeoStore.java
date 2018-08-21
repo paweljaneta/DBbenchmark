@@ -19,6 +19,5 @@ public class NeoStore implements Serializable {
     @GeneratedValue
     private Long id;
     private String name;
-
     private NeoAddress address;
 }
