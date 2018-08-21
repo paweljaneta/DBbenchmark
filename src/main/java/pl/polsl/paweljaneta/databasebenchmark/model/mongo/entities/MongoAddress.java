@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@Document(collection = "address")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
