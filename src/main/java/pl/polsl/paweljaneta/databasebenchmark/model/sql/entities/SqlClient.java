@@ -23,12 +23,4 @@ public class SqlClient implements Serializable {
     @OneToOne
     @JoinColumn(name = "addressId",referencedColumnName = "id")
     private SqlAddress address;
-
-   /* protected NeoClient(){}
-
-    public NeoClient(String name, String phoneNumber, String email) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-    }*/
 }

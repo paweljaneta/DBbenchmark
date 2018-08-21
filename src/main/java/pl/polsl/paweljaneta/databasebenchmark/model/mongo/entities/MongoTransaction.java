@@ -3,6 +3,7 @@ package pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import pl.polsl.paweljaneta.databasebenchmark.model.DeliveryMode;
 
 import javax.persistence.*;
@@ -14,11 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class MongoTransaction implements Serializable {
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
+    @DBRef
     private MongoStore store;
-    @OneToMany
-    @JoinColumn(name = "productId", referencedColumnName = "id")
     private List<MongoProduct> products;
     private DeliveryMode deliveryMode;
 }

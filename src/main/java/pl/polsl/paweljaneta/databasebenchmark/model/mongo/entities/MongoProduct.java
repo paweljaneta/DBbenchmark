@@ -3,6 +3,7 @@ package pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,5 +18,6 @@ public class MongoProduct implements Serializable {
     private String id;
     private String name;
     private float price;
+    @DBRef
     private MongoDiscount discount;
 }

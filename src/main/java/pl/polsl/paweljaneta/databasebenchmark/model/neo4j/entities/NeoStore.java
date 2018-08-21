@@ -8,6 +8,7 @@ import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlAddress;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @NodeEntity
 @Data
@@ -18,9 +19,6 @@ public class NeoStore implements Serializable {
     @GeneratedValue
     private Long id;
     private String name;
-    @OneToOne
-    @JoinColumn(name = "addressId", referencedColumnName = "id")
-    private SqlAddress address;
 
-//    private List<NeoProduct> products;
+    private NeoAddress address;
 }

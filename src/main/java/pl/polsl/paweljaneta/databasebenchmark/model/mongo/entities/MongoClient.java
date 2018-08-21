@@ -3,6 +3,7 @@ package pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlAddress;
 
 import javax.persistence.*;
@@ -18,5 +19,6 @@ public class MongoClient implements Serializable {
     private String name;
     private String phoneNumber;
     private String email;
+    @DBRef
     private MongoAddress address;
 }

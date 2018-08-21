@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,10 +17,12 @@ public class SqlOrder implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long id;
-//    @OneToMany
-//    @JoinColumn
-//    private List<NeoProduct> products;
+    private Long orderId;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "ORDER_PRODUCT", joinColumns = {
+            @JoinColumn(name = "orderId", referencedColumnName = "orderId")},
+            inverseJoinColumns = @JoinColumn(name = "productId", referencedColumnName = "productId"))
+    private List<SqlProduct> products;
     @ManyToOne
     @JoinColumn(name = "clientId", referencedColumnName = "id")
     private SqlClient client;

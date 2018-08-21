@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,10 +17,15 @@ public class SqlProduct implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long productId;
     private String name;
     private float price;
     @ManyToOne
     @JoinColumn(name = "discountId",referencedColumnName = "id")
     private SqlDiscount discount;
+
+    @ManyToMany(mappedBy = "products")
+    private List<SqlCart> carts;
+    @ManyToMany(mappedBy = "products")
+    private List<SqlOrder> orders;
 }

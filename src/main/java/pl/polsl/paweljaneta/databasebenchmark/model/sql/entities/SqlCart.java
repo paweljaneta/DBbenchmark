@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(schema = "public", name = "CART")
@@ -16,15 +17,12 @@ public class SqlCart implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long cartId;
     private SqlClient client;
 
-//    private List<NeoProduct> products;
-
-   /* protected NeoCart(){}
-
-    public NeoCart(NeoClient client, List<NeoProduct> products) {
-        this.client = client;
-        this.products = products;
-    }*/
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "CART_PRODUCT", joinColumns = {
+            @JoinColumn(name = "cartId", referencedColumnName = "cartId")},
+            inverseJoinColumns = @JoinColumn(name = "productId", referencedColumnName = "productId"))
+   private List<SqlProduct> products;
 }

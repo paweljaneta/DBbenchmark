@@ -7,6 +7,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @NodeEntity
 @Data
@@ -17,10 +18,7 @@ public class NeoOrder implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-//    @OneToMany
-//    @JoinColumn
-//    private List<NeoProduct> products;
-    @ManyToOne
-    @JoinColumn(name = "clientId", referencedColumnName = "id")
+
+    private List<NeoProduct> products;
     private NeoClient client;
 }

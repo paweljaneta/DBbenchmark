@@ -19,7 +19,6 @@ public class NeoProduct implements Serializable {
     private Long id;
     private String name;
     private float price;
-    @ManyToOne
-    @JoinColumn(name = "discountId",referencedColumnName = "id")
+
     private NeoDiscount discount;
 }

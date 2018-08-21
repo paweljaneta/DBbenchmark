@@ -16,8 +16,7 @@ public class NeoShipment implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "orderId",referencedColumnName = "id")
+
     private NeoOrder order;
     private String tracingNumber;
     private String shipmentDetails;

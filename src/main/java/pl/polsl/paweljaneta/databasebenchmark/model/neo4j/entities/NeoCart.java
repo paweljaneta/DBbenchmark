@@ -7,6 +7,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @NodeEntity
 @Data
@@ -18,4 +19,5 @@ public class NeoCart implements Serializable {
     @GeneratedValue
     private Long id;
     private NeoClient client;
+    private List<NeoProduct> products;
 }

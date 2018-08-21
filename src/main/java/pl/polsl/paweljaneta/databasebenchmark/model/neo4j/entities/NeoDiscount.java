@@ -19,13 +19,5 @@ public class NeoDiscount implements Serializable {
     @GeneratedValue
     private Long id;
     private float discountValue;
-    @OneToMany(mappedBy = "discount")
     private Set<NeoProduct> products;
-
-   /* protected NeoDiscount() {}
-
-    public NeoDiscount(float discountValue, NeoProduct product) {
-        this.discountValue = discountValue;
-        this.product = product;
-    }*/
 }

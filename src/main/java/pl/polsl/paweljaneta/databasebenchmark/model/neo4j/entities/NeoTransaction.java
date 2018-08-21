@@ -19,8 +19,7 @@ public class NeoTransaction implements Serializable {
     @GeneratedValue
     private Long id;
     private NeoStore store;
-    @OneToMany
-    @JoinColumn(name = "productId", referencedColumnName = "id")
+
     private List<NeoProduct> products;
     private DeliveryMode deliveryMode;
 }

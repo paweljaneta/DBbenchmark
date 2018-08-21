@@ -17,7 +17,7 @@ public class SqlShipment implements Serializable {
     @GeneratedValue
     private Long id;
     @OneToOne
-    @JoinColumn(name = "orderId",referencedColumnName = "id")
+    @JoinColumn(name = "orderId",referencedColumnName = "orderId")
     private SqlOrder order;
     private String tracingNumber;
     private String shipmentDetails;

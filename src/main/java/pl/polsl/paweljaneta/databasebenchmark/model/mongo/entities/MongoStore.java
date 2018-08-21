@@ -13,12 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class MongoStore implements Serializable {
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
     private String name;
-    @OneToOne
-    @JoinColumn(name = "addressId", referencedColumnName = "id")
-    private SqlAddress address;
-
-//    private List<NeoProduct> products;
+    private MongoAddress address;
 }
