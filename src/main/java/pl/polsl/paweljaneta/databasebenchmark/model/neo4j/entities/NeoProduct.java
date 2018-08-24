@@ -23,10 +23,10 @@ public class NeoProduct implements Serializable {
     private float price;
     private NeoDiscount discount;
 
-    @Relationship(type = "CARTS_IN_PRODUCT", direction = Relationship.UNDIRECTED)
+/*    @Relationship(type = "CARTS_IN_PRODUCT", direction = Relationship.UNDIRECTED)
     private Set<NeoCart> carts;
     @Relationship(type = "ORDERS_IN_PRODUCT", direction = Relationship.UNDIRECTED)
     private Set<NeoOrder> orders;
-    @Relationship(type = "TRANSACTIONS_IN_PRODUCT", direction = Relationship.UNDIRECTED)
-    private Set<NeoTransaction> transactions;
+    @Relationship(type = "TRANSACTIONS_IN_PRODUCT", direction = Relationship.OUTGOING)
+    private Set<NeoTransaction> transactions;*/
 }

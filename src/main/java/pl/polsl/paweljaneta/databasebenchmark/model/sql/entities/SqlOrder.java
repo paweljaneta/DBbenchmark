@@ -18,7 +18,7 @@ public class SqlOrder implements Serializable {
     @Id
     @GeneratedValue
     private Long orderId;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "ORDER_PRODUCT", joinColumns = {
             @JoinColumn(name = "orderId", referencedColumnName = "orderId")},
             inverseJoinColumns = @JoinColumn(name = "productId", referencedColumnName = "productId"))

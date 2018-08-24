@@ -9,6 +9,7 @@ import pl.polsl.paweljaneta.databasebenchmark.model.DeliveryMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Document(collection = "transaction")
@@ -22,4 +23,5 @@ public class MongoTransaction implements Serializable {
     private MongoStore store;
     private List<MongoProduct> products;
     private DeliveryMode deliveryMode;
+    private Date date;
 }

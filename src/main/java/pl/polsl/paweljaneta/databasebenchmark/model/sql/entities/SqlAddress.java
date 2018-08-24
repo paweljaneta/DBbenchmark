@@ -22,13 +22,4 @@ public class SqlAddress implements Serializable {
     private String postalCode;
     private String street;
     private String streetNumber;
-
-   /* protected MongoAddress(){}
-
-    public MongoAddress(String city, String postalCode, String street, String streetNumber) {
-        this.city = city;
-        this.postalCode = postalCode;
-        this.street = street;
-        this.streetNumber = streetNumber;
-    }*/
 }

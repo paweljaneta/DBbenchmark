@@ -7,6 +7,7 @@ import pl.polsl.paweljaneta.databasebenchmark.model.DeliveryMode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,10 +20,11 @@ public class SqlTransaction implements Serializable {
     @GeneratedValue
     private Long transactionId;
     private SqlStore store;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "TRANSACTION_PRODUCT", joinColumns = {
             @JoinColumn(name = "transactionId", referencedColumnName = "transactionId")},
             inverseJoinColumns = @JoinColumn(name = "productId", referencedColumnName = "productId"))
     private List<SqlProduct> products;
     private DeliveryMode deliveryMode;
+    private Date date;
 }

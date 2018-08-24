@@ -20,7 +20,7 @@ public class SqlCart implements Serializable {
     private Long cartId;
     private SqlClient client;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "CART_PRODUCT", joinColumns = {
             @JoinColumn(name = "cartId", referencedColumnName = "cartId")},
             inverseJoinColumns = @JoinColumn(name = "productId", referencedColumnName = "productId"))
