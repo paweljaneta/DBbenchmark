@@ -78,15 +78,15 @@ public class GetVersion {
         Set<NeoTransaction> transactions = new HashSet<NeoTransaction>();
         transactions.add(transaction1);
         transactions.add(transaction2);
-        product1.setTransactions(transactions);
+       // product1.setTransactions(transactions);
         productRepository.save(product1);
         transactions.clear();
         transactions.add(transaction1);
-        product3.setTransactions(transactions);
+      //  product3.setTransactions(transactions);
         productRepository.save(product3);
         transactions.clear();
         transactions.add(transaction2);
-        product2.setTransactions(transactions);
+       // product2.setTransactions(transactions);
         productRepository.save(product2);
     }
 

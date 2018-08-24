@@ -22,10 +22,4 @@ public class SqlDiscount implements Serializable {
     @OneToMany(mappedBy = "discount")
     private Set<SqlProduct> products;
 
-   /* protected NeoDiscount() {}
-
-    public NeoDiscount(float discountValue, NeoProduct product) {
-        this.discountValue = discountValue;
-        this.product = product;
-    }*/
 }
