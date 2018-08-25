@@ -59,7 +59,8 @@ public class SqlDataInsertor {
         addressRepository.saveAll(storeAddressDataList);
     }
 
-    public void insertClientData(List<SqlClient> clientDataList, Iterable<CSVRecord> records, List<SqlAddress> addressList,List<Integer> addressIndexes) {
+    public void insertClientData(List<SqlClient> clientDataList, Iterable<CSVRecord> records,
+                                 List<SqlAddress> addressList, List<Integer> addressIndexes) {
         int index = 0;
         for (CSVRecord record : records) {
             SqlClient client = new SqlClient();
@@ -73,12 +74,13 @@ public class SqlDataInsertor {
         clientRepository.saveAll(clientDataList);
     }
 
-    public void insertStoreData(List<SqlStore> storeDataList, Iterable<CSVRecord> records, List<SqlAddress> addressList) {
+    public void insertStoreData(List<SqlStore> storeDataList, Iterable<CSVRecord> records,
+                                List<SqlAddress> addressList, List<Integer> addressIndexes) {
         int index = 0;
         for (CSVRecord record : records) {
             SqlStore store = new SqlStore();
             store.setName(record.get("name"));
-            store.setAddress(addressList.get(index));
+            store.setAddress(addressList.get(addressIndexes.get(index)));
             storeDataList.add(store);
             index++;
         }
@@ -88,7 +90,7 @@ public class SqlDataInsertor {
     public void insertDiscountData(List<SqlDiscount> discountDataList, Iterable<CSVRecord> records) {
         for (CSVRecord record : records) {
             SqlDiscount discount = new SqlDiscount();
-            discount.setDiscountValue(Float.parseFloat(record.get("discountValue")));
+            discount.setDiscountValue(Float.parseFloat(record.get("discountValue").replace(',', '.')));
             discountDataList.add(discount);
         }
         discountRepository.saveAll(discountDataList);
@@ -99,7 +101,7 @@ public class SqlDataInsertor {
         for (CSVRecord record : records) {
             SqlProduct product = new SqlProduct();
             product.setName(record.get("name"));
-            product.setPrice(Float.parseFloat(record.get("price")));
+            product.setPrice(Float.parseFloat(record.get("price").replace(',', '.')));
             product.setDiscount(discountList.get(discountIdForProductId.get(index)));
             productDataList.add(product);
             index++;
@@ -144,7 +146,11 @@ public class SqlDataInsertor {
         for (CSVRecord record : records) {
             SqlShipment sqlShipment = new SqlShipment();
             sqlShipment.setTracingNumber(record.get("tracingNumber"));
-            sqlShipment.setShipmentDetails(record.get("shipmentDetails"));
+            String shipmentDetails = record.get("shipmentDetails");
+            if (shipmentDetails.length() > 255) {
+                shipmentDetails = shipmentDetails.substring(0, 254);
+            }
+            sqlShipment.setShipmentDetails(shipmentDetails);
             sqlShipment.setOrder(orderList.get(orderIdForShipmentId.get(index)));
             shipmentDataList.add(sqlShipment);
             index++;
@@ -156,7 +162,7 @@ public class SqlDataInsertor {
         int index = 0;
         for (CSVRecord record : records) {
             SqlTransaction transaction = new SqlTransaction();
-            transaction.setDate(Date.valueOf(record.get("date")));
+            transaction.setDate(new Date(Long.parseLong(record.get("date")) * 1000));
             transaction.setDeliveryMode(deliveryModeList.get(index));
             transaction.setStore(storeList.get(storeIdForTransactionId.get(index)));
             List<SqlProduct> products = new ArrayList<>();
@@ -170,31 +176,20 @@ public class SqlDataInsertor {
         transactionRepository.saveAll(transactionDataList);
     }
 
-    public void insertProductsInStores(List<SqlStore> storeList, List<Integer> storeIds, List<SqlProduct> productsList, List<List<Integer>> listOfProductIdsForStoreId,List<List<Long>> quantityOfProductsForId) {
+    public void insertProductsInStores(List<SqlStore> storeList, List<SqlProduct> productsList, List<List<Integer>> listOfProductIdsForStoreId, List<List<Long>> quantityOfProductsForId) {
         List<SqlProductsInStores> productsInStores = new ArrayList<>();
-       /* int index=0;
-        for (Integer storeId : storeIds) {
-            Long storeEntityId = storeList.get(storeId).getId();
-            for (Integer productIndex : listOfProductIdsForStoreId.get(index)) {
+        for (int i = 0; i < storeList.size(); i++) {
+            Long storeEntityId = storeList.get(i).getId();
+            for (int j = 0; j < listOfProductIdsForStoreId.get(i).size(); j++) {
                 SqlProductsInStores data = new SqlProductsInStores();
-                data.setProductId(productsList.get(productIndex).getProductId());
+                Long productEntityId = productsList.get(listOfProductIdsForStoreId.get(i).get(j)).getProductId();
+                data.setProductId(productEntityId);
                 data.setStoreId(storeEntityId);
-                data.setQuantity();
+                Long quantity = quantityOfProductsForId.get(i).get(j);
+                data.setQuantity(quantity);
+                productsInStores.add(data);
             }
-            index++;
-        }*/
-       for(int i=0;i<storeIds.size();i++){
-           Long storeEntityId = storeList.get(i).getId();
-           for(int j=0;j<listOfProductIdsForStoreId.get(i).size();j++){
-               SqlProductsInStores data = new SqlProductsInStores();
-               Long productEntityId = productsList.get(listOfProductIdsForStoreId.get(i).get(j)).getProductId();
-               data.setProductId(productEntityId);
-               data.setStoreId(storeEntityId);
-               Long quantity = quantityOfProductsForId.get(i).get(j);
-               data.setQuantity(quantity);
-               productsInStores.add(data);
-           }
-       }
-       productsInStoresRepository.saveAll(productsInStores);
+        }
+        productsInStoresRepository.saveAll(productsInStores);
     }
 }

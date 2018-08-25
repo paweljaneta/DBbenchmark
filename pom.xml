@@ -97,9 +97,10 @@
             <artifactId>joda-time</artifactId>
             <version>RELEASE</version>
         </dependency>
-        <dependency>
+       <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
+             <version>RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
