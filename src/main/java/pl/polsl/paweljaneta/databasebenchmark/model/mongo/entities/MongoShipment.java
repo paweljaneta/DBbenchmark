@@ -18,4 +18,5 @@ public class MongoShipment implements Serializable {
     private MongoOrder order;
     private String tracingNumber;
     private String shipmentDetails;
+    private Long entityId;
 }

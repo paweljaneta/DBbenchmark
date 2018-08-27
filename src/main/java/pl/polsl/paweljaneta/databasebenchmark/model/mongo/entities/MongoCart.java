@@ -19,5 +19,5 @@ public class MongoCart implements Serializable {
     private String id;
     private MongoClient client;
     private List<MongoProduct> products;
-
+    private Long entityId;
 }

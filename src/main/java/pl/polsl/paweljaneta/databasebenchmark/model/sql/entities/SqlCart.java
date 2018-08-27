@@ -25,4 +25,5 @@ public class SqlCart implements Serializable {
             @JoinColumn(name = "cartId", referencedColumnName = "cartId")},
             inverseJoinColumns = @JoinColumn(name = "productId", referencedColumnName = "productId"))
    private List<SqlProduct> products;
+    private Long entityId;
 }

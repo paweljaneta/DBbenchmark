@@ -23,4 +23,5 @@ public class MongoClient implements Serializable {
     private String email;
     @DBRef
     private MongoAddress address;
+    private Long entityId;
 }

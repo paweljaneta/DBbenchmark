@@ -22,4 +22,5 @@ public class MongoProduct implements Serializable {
     private float price;
     @DBRef
     private MongoDiscount discount;
+    private Long entityId;
 }

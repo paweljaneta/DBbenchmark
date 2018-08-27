@@ -21,4 +21,5 @@ public class NeoProductsInStores implements Serializable {
     private NeoStore store;
     private NeoProduct product;
     private Long quantity;
+    private Long entityId;
 }

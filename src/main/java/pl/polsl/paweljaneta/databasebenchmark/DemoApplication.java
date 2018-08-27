@@ -19,7 +19,6 @@ public class DemoApplication {
     static ApplicationContext applicationContext;
 
     public static void main(String[] args) {
-        System.setProperty("dupa", "0");
         SpringApplication.run(DemoApplication.class, args);
     }
 

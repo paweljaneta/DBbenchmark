@@ -25,4 +25,5 @@ public class MongoProductsInStores implements Serializable {
     @DBRef
     private MongoProduct product;
     private Long quantity;
+    private Long entityId;
 }

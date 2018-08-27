@@ -31,4 +31,5 @@ public class SqlProduct implements Serializable {
     private List<SqlCart> carts;
     @ManyToMany(mappedBy = "products")
     private List<SqlOrder> orders;
+    private Long entityId;
 }

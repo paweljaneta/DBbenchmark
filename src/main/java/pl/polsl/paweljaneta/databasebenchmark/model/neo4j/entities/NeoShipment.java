@@ -19,4 +19,5 @@ public class NeoShipment implements Serializable {
     private NeoOrder order;
     private String tracingNumber;
     private String shipmentDetails;
+    private Long entityId;
 }

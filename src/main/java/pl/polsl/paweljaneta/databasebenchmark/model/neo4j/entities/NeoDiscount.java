@@ -22,4 +22,5 @@ public class NeoDiscount implements Serializable {
     private float discountValue;
     @Relationship(type = "DISCOUNTS_IN_PRODUCTS", direction = Relationship.UNDIRECTED)
     private Set<NeoProduct> products;
+    private Long entityId;
 }

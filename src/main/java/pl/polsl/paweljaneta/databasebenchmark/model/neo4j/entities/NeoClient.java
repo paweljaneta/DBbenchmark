@@ -22,5 +22,6 @@ public class NeoClient implements Serializable {
     private String phoneNumber;
     private String email;
     private NeoAddress address;
+    private Long entityId;
 
 }

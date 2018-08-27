@@ -21,4 +21,5 @@ public class MongoAddress implements Serializable {
     private String postalCode;
     private String street;
     private String streetNumber;
+    private Long entityId;
 }

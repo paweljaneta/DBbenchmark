@@ -22,4 +22,5 @@ public class NeoOrder implements Serializable {
     @Relationship(type = "PRODUCTS_IN_ORDER", direction = Relationship.UNDIRECTED)
     private List<NeoProduct> products;
     private NeoClient client;
+    private Long entityId;
 }

@@ -22,4 +22,5 @@ public class NeoCart implements Serializable {
     private NeoClient client;
     @Relationship(type = "PRODUCTS_IN_CART", direction = Relationship.UNDIRECTED)
     private List<NeoProduct> products;
+    private Long entityId;
 }

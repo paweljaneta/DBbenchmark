@@ -24,4 +24,5 @@ public class MongoTransaction implements Serializable {
     private List<MongoProduct> products;
     private DeliveryMode deliveryMode;
     private Date date;
+    private Long entityId;
 }

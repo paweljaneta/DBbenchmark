@@ -18,4 +18,5 @@ public class MongoStore implements Serializable {
     private String id;
     private String name;
     private MongoAddress address;
+    private Long entityId;
 }

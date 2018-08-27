@@ -25,4 +25,5 @@ public class NeoTransaction implements Serializable {
     private List<NeoProduct> products;
     private DeliveryMode deliveryMode;
     private Date date;
+    private Long entityId;
 }

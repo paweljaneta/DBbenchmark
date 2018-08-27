@@ -21,4 +21,5 @@ public class SqlShipment implements Serializable {
     private SqlOrder order;
     private String tracingNumber;
     private String shipmentDetails;
+    private Long entityId;
 }

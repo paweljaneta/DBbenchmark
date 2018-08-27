@@ -23,4 +23,5 @@ public class SqlProductsInStores implements Serializable {
     @Id
     private Long productId;
     private Long quantity;
+    private Long entityId;
 }

@@ -22,6 +22,7 @@ public class NeoProduct implements Serializable {
     private String name;
     private float price;
     private NeoDiscount discount;
+    private Long entityId;
 
 /*    @Relationship(type = "CARTS_IN_PRODUCT", direction = Relationship.UNDIRECTED)
     private Set<NeoCart> carts;

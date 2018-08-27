@@ -20,4 +20,5 @@ public class NeoStore implements Serializable {
     private Long id;
     private String name;
     private NeoAddress address;
+    private Long entityId;
 }

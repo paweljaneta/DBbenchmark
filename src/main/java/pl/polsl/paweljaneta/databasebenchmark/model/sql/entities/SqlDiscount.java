@@ -21,5 +21,5 @@ public class SqlDiscount implements Serializable {
     private float discountValue;
     @OneToMany(mappedBy = "discount")
     private Set<SqlProduct> products;
-
+    private Long entityId;
 }

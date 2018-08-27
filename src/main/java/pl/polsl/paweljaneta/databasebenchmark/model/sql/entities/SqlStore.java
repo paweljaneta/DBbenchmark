@@ -20,4 +20,5 @@ public class SqlStore implements Serializable {
     @OneToOne
     @JoinColumn(name = "addressId", referencedColumnName = "id")
     private SqlAddress address;
+    private Long entityId;
 }

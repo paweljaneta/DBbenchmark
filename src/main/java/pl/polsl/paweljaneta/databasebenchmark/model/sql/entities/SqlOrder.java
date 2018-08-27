@@ -26,4 +26,5 @@ public class SqlOrder implements Serializable {
     @ManyToOne
     @JoinColumn(name = "clientId", referencedColumnName = "id")
     private SqlClient client;
+    private Long entityId;
 }

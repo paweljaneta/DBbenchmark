@@ -27,4 +27,5 @@ public class SqlTransaction implements Serializable {
     private List<SqlProduct> products;
     private DeliveryMode deliveryMode;
     private Date date;
+    private Long entityId;
 }

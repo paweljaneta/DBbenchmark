@@ -19,4 +19,5 @@ public class MongoOrder implements Serializable {
     private String id;
     private List<MongoProduct> products;
     private MongoClient client;
+    private Long entityId;
 }

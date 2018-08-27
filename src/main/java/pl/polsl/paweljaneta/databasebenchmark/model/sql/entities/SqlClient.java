@@ -23,4 +23,5 @@ public class SqlClient implements Serializable {
     @OneToOne
     @JoinColumn(name = "addressId",referencedColumnName = "id")
     private SqlAddress address;
+    private Long entityId;
 }
