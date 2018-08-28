@@ -83,7 +83,7 @@ public class DataCreator {
     @Autowired
     private NeoDataInsertor neoDataInsertor;
 
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     public void createData() {
         createStoreAddressData();
         createClientAddressData();

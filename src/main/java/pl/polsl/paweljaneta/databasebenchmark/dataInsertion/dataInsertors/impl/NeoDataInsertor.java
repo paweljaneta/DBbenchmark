@@ -42,6 +42,7 @@ public class NeoDataInsertor {
             address.setPostalCode(record.get("postalCode"));
             address.setStreet(record.get("street"));
             address.setStreetNumber(record.get("streetNumber"));
+            address.setEntityId(Long.parseLong(record.get("entityId")));
             clientAddressDataList.add(address);
         }
         addressRepository.saveAll(clientAddressDataList);
@@ -54,6 +55,7 @@ public class NeoDataInsertor {
             address.setPostalCode(record.get("postalCode"));
             address.setStreet(record.get("street"));
             address.setStreetNumber(record.get("streetNumber"));
+            address.setEntityId(Long.parseLong(record.get("entityId")));
             storeAddressDataList.add(address);
         }
         addressRepository.saveAll(storeAddressDataList);
@@ -68,6 +70,7 @@ public class NeoDataInsertor {
             client.setPhoneNumber(record.get("phoneNumber"));
             client.setEmail(record.get("email"));
             client.setAddress(addressList.get(addressIndexes.get(index)));
+            client.setEntityId(Long.parseLong(record.get("entityId")));
             clientDataList.add(client);
             index++;
         }
@@ -81,6 +84,7 @@ public class NeoDataInsertor {
             NeoStore store = new NeoStore();
             store.setName(record.get("name"));
             store.setAddress(addressList.get(addressIndexes.get(index)));
+            store.setEntityId(Long.parseLong(record.get("entityId")));
             storeDataList.add(store);
             index++;
         }
@@ -91,6 +95,7 @@ public class NeoDataInsertor {
         for (CSVRecord record : records) {
             NeoDiscount discount = new NeoDiscount();
             discount.setDiscountValue(Float.parseFloat(record.get("discountValue").replace(',', '.')));
+            discount.setEntityId(Long.parseLong(record.get("entityId")));
             discountDataList.add(discount);
         }
         discountRepository.saveAll(discountDataList);
@@ -103,6 +108,7 @@ public class NeoDataInsertor {
             product.setName(record.get("name"));
             product.setPrice(Float.parseFloat(record.get("price").replace(',', '.')));
             product.setDiscount(discountList.get(discountIdForProductId.get(index)));
+            product.setEntityId(Long.parseLong(record.get("entityId")));
             productDataList.add(product);
             index++;
         }
@@ -152,6 +158,7 @@ public class NeoDataInsertor {
             }
             neoShipment.setShipmentDetails(shipmentDetails);
             neoShipment.setOrder(orderList.get(orderIdForShipmentId.get(index)));
+            neoShipment.setEntityId(Long.parseLong(record.get("entityId")));
             shipmentDataList.add(neoShipment);
             index++;
         }
@@ -170,6 +177,7 @@ public class NeoDataInsertor {
                 products.add(productsList.get(productId));
             }
             transaction.setProducts(products);
+            transaction.setEntityId(Long.parseLong(record.get("entityId")));
             transactionDataList.add(transaction);
             index++;
         }
