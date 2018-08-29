@@ -115,7 +115,7 @@ public class NeoDataInsertor {
         productRepository.saveAll(productDataList);
     }
 
-    public void insertCartData(List<NeoCart> cartDataList, List<NeoClient> clientList, List<Integer> clientIdForCartId, List<NeoProduct> productsList, List<List<Integer>> listOfProductIdsForCartId) {
+    public void insertCartData(List<NeoCart> cartDataList, List<NeoClient> clientList, List<Integer> clientIdForCartId, List<NeoProduct> productsList, List<List<Integer>> listOfProductIdsForCartId, List<Long> entityIds) {
         int index = 0;
         for (List<Integer> productIds : listOfProductIdsForCartId) {
             NeoCart cart = new NeoCart();
@@ -125,13 +125,14 @@ public class NeoDataInsertor {
                 products.add(productsList.get(productIndex));
             }
             cart.setProducts(products);
+            cart.setEntityId(entityIds.get(index));
             cartDataList.add(cart);
             index++;
         }
         cartRepository.saveAll(cartDataList);
     }
 
-    public void insertOrderData(List<NeoOrder> orderDataList, List<NeoClient> clientList, List<Integer> clientIdForOrderId, List<NeoProduct> productsList, List<List<Integer>> listOfProductIdsForOrderId) {
+    public void insertOrderData(List<NeoOrder> orderDataList, List<NeoClient> clientList, List<Integer> clientIdForOrderId, List<NeoProduct> productsList, List<List<Integer>> listOfProductIdsForOrderId, List<Long> entityIds) {
         int index = 0;
         for (List<Integer> productIds : listOfProductIdsForOrderId) {
             NeoOrder order = new NeoOrder();
@@ -141,6 +142,7 @@ public class NeoDataInsertor {
                 products.add(productsList.get(productIndex));
             }
             order.setProducts(products);
+            order.setEntityId(entityIds.get(index));
             orderDataList.add(order);
             index++;
         }
@@ -184,8 +186,9 @@ public class NeoDataInsertor {
         transactionRepository.saveAll(transactionDataList);
     }
 
-    public void insertProductsInStores(List<NeoStore> storeList, List<NeoProduct> productsList, List<List<Integer>> listOfProductIdsForStoreId, List<List<Long>> quantityOfProductsForId) {
+    public void insertProductsInStores(List<NeoStore> storeList, List<NeoProduct> productsList, List<List<Integer>> listOfProductIdsForStoreId, List<List<Long>> quantityOfProductsForId, List<Long> entityIds) {
         List<NeoProductsInStores> productsInStores = new ArrayList<>();
+        int index = 0;
         for (int i = 0; i < storeList.size(); i++) {
             NeoStore storeEntity = storeList.get(i);
             for (int j = 0; j < listOfProductIdsForStoreId.get(i).size(); j++) {
@@ -195,7 +198,9 @@ public class NeoDataInsertor {
                 data.setStore(storeEntity);
                 Long quantity = quantityOfProductsForId.get(i).get(j);
                 data.setQuantity(quantity);
+                data.setEntityId(entityIds.get(index));
                 productsInStores.add(data);
+                index++;
             }
         }
         productsInStoresRepository.saveAll(productsInStores);

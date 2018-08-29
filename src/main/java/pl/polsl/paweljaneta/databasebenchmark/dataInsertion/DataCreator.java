@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.MongoDataInsertor;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.NeoDataInsertor;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.SqlDataInsertor;
+import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.utils.IdGenerator;
 import pl.polsl.paweljaneta.databasebenchmark.model.DeliveryMode;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.*;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.*;
@@ -24,7 +25,7 @@ import java.util.Random;
 
 @Component
 public class DataCreator {
-    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.NEO4J;
+    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.SQL;
 
     private final int NO_OF_CARTS = 20000;
     private final int NO_OF_ORDERS = 10000;
@@ -76,6 +77,10 @@ public class DataCreator {
     private int productsSize = 0;
     private int ordersSize = 0;
 
+    private IdGenerator cartIdGenerator = new IdGenerator();
+    private IdGenerator orderIdGenerator = new IdGenerator();
+    private IdGenerator productsInStoresIdGenerator = new IdGenerator();
+
     @Autowired
     private SqlDataInsertor sqlDataInsertor;
     @Autowired
@@ -83,7 +88,7 @@ public class DataCreator {
     @Autowired
     private NeoDataInsertor neoDataInsertor;
 
-//    @EventListener(ApplicationReadyEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
     public void createData() {
         createStoreAddressData();
         createClientAddressData();
@@ -139,6 +144,14 @@ public class DataCreator {
                 result.add(rnd);
                 index++;
             }
+        }
+        return result;
+    }
+
+    private List<Long> fillListWithGeneratedEntityIds(int count, IdGenerator generator) {
+        List<Long> result = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            result.add(generator.getId());
         }
         return result;
     }
@@ -252,8 +265,9 @@ public class DataCreator {
 
     private void createCartData() {
         Random random = new Random();
-        List<Integer> clientIndexes = fillListWithRandomIndexes(clientsSize- 1, NO_OF_CARTS);
+        List<Integer> clientIndexes = fillListWithRandomIndexes(clientsSize - 1, NO_OF_CARTS);
         List<List<Integer>> productIndexes = new ArrayList<>();
+        List<Long> entityIds = fillListWithGeneratedEntityIds(NO_OF_CARTS, cartIdGenerator);
 
         for (int i = 0; i < NO_OF_CARTS; i++) {
             int productNumber = 1 + random.nextInt(MAX_NO_OF_PRODUCTS_IN_TRANSACTION_CART_ORDER);
@@ -262,13 +276,13 @@ public class DataCreator {
         }
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
-            sqlDataInsertor.insertCartData(sqlCarts, sqlClients, clientIndexes, sqlProducts, productIndexes);
+            sqlDataInsertor.insertCartData(sqlCarts, sqlClients, clientIndexes, sqlProducts, productIndexes, entityIds);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
-            mongoDataInsertor.insertCartData(mongoCarts, mongoClients, clientIndexes, mongoProducts, productIndexes);
+            mongoDataInsertor.insertCartData(mongoCarts, mongoClients, clientIndexes, mongoProducts, productIndexes, entityIds);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
-            neoDataInsertor.insertCartData(neoCarts, neoClients, clientIndexes, neoProducts, productIndexes);
+            neoDataInsertor.insertCartData(neoCarts, neoClients, clientIndexes, neoProducts, productIndexes, entityIds);
         }
     }
 
@@ -276,6 +290,7 @@ public class DataCreator {
         Random random = new Random();
         List<Integer> clientIndexes = fillListWithRandomIndexes(clientsSize - 1, NO_OF_ORDERS);
         List<List<Integer>> productIndexes = new ArrayList<>();
+        List<Long> entityIds = fillListWithGeneratedEntityIds(NO_OF_ORDERS, orderIdGenerator);
 
         for (int i = 0; i < NO_OF_ORDERS; i++) {
             int productNumber = 1 + random.nextInt(MAX_NO_OF_PRODUCTS_IN_TRANSACTION_CART_ORDER);
@@ -284,15 +299,15 @@ public class DataCreator {
         }
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
-            sqlDataInsertor.insertOrderData(sqlOrders, sqlClients, clientIndexes, sqlProducts, productIndexes);
+            sqlDataInsertor.insertOrderData(sqlOrders, sqlClients, clientIndexes, sqlProducts, productIndexes, entityIds);
             ordersSize = sqlOrders.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
-            mongoDataInsertor.insertOrderData(mongoOrders, mongoClients, clientIndexes, mongoProducts, productIndexes);
+            mongoDataInsertor.insertOrderData(mongoOrders, mongoClients, clientIndexes, mongoProducts, productIndexes, entityIds);
             ordersSize = mongoOrders.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
-            neoDataInsertor.insertOrderData(neoOrders, neoClients, clientIndexes, neoProducts, productIndexes);
+            neoDataInsertor.insertOrderData(neoOrders, neoClients, clientIndexes, neoProducts, productIndexes, entityIds);
             ordersSize = neoOrders.size();
         }
     }
@@ -349,6 +364,8 @@ public class DataCreator {
 
         List<List<Integer>> productIndexes = new ArrayList<>();
         List<List<Long>> quantities = new ArrayList<>();
+        List<Long> entityIds = new ArrayList<>();
+
         for (int i = 0; i < storesSize; i++) {
             int noOfProducts = MIN_NO_OF_PRODUCTS_IN_STORE + random.nextInt(MAX_NO_OF_PRODUCTS_IN_STORE - MIN_NO_OF_PRODUCTS_IN_STORE + 1);
             List<Integer> listOfProductIndexes = fillListWithRandomUniqueIndexes(productsSize - 1, noOfProducts);
@@ -358,18 +375,20 @@ public class DataCreator {
             for (Integer listOfProductIndex : listOfProductIndexes) {
                 long quantity = 1 + random.nextInt(MAX_PRODUCT_QUANTITY);
                 listOfQuantities.add(quantity);
+
+                entityIds.add(productsInStoresIdGenerator.getId());
             }
             quantities.add(listOfQuantities);
         }
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
-            sqlDataInsertor.insertProductsInStores(sqlStores, sqlProducts, productIndexes, quantities);
+            sqlDataInsertor.insertProductsInStores(sqlStores, sqlProducts, productIndexes, quantities, entityIds);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
-            mongoDataInsertor.insertProductsInStores(mongoStores, mongoProducts, productIndexes, quantities);
+            mongoDataInsertor.insertProductsInStores(mongoStores, mongoProducts, productIndexes, quantities, entityIds);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
-            neoDataInsertor.insertProductsInStores(neoStores, neoProducts, productIndexes, quantities);
+            neoDataInsertor.insertProductsInStores(neoStores, neoProducts, productIndexes, quantities, entityIds);
         }
     }
 

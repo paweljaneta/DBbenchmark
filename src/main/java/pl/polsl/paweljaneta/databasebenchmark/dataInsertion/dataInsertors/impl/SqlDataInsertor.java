@@ -35,6 +35,7 @@ public class SqlDataInsertor {
     @Autowired
     private SqlProductsInStoresRepository productsInStoresRepository;
 
+
     public void insertClientAddressData(List<SqlAddress> clientAddressDataList, Iterable<CSVRecord> records) {
         for (CSVRecord record : records) {
             SqlAddress address = new SqlAddress();
@@ -115,7 +116,7 @@ public class SqlDataInsertor {
         productRepository.saveAll(productDataList);
     }
 
-    public void insertCartData(List<SqlCart> cartDataList, List<SqlClient> clientList, List<Integer> clientIdForCartId, List<SqlProduct> productsList, List<List<Integer>> listOfProductIdsForCartId) {
+    public void insertCartData(List<SqlCart> cartDataList, List<SqlClient> clientList, List<Integer> clientIdForCartId, List<SqlProduct> productsList, List<List<Integer>> listOfProductIdsForCartId, List<Long> entityIds) {
         int index = 0;
         for (List<Integer> productIds : listOfProductIdsForCartId) {
             SqlCart cart = new SqlCart();
@@ -125,13 +126,14 @@ public class SqlDataInsertor {
                 products.add(productsList.get(productIndex));
             }
             cart.setProducts(products);
+            cart.setEntityId(entityIds.get(index));
             cartDataList.add(cart);
             index++;
         }
         cartRepository.saveAll(cartDataList);
     }
 
-    public void insertOrderData(List<SqlOrder> orderDataList, List<SqlClient> clientList, List<Integer> clientIdForOrderId, List<SqlProduct> productsList, List<List<Integer>> listOfProductIdsForOrderId) {
+    public void insertOrderData(List<SqlOrder> orderDataList, List<SqlClient> clientList, List<Integer> clientIdForOrderId, List<SqlProduct> productsList, List<List<Integer>> listOfProductIdsForOrderId, List<Long> entityIds) {
         int index = 0;
         for (List<Integer> productIds : listOfProductIdsForOrderId) {
             SqlOrder order = new SqlOrder();
@@ -141,6 +143,7 @@ public class SqlDataInsertor {
                 products.add(productsList.get(productIndex));
             }
             order.setProducts(products);
+            order.setEntityId(entityIds.get(index));
             orderDataList.add(order);
             index++;
         }
@@ -184,8 +187,9 @@ public class SqlDataInsertor {
         transactionRepository.saveAll(transactionDataList);
     }
 
-    public void insertProductsInStores(List<SqlStore> storeList, List<SqlProduct> productsList, List<List<Integer>> listOfProductIdsForStoreId, List<List<Long>> quantityOfProductsForId) {
+    public void insertProductsInStores(List<SqlStore> storeList, List<SqlProduct> productsList, List<List<Integer>> listOfProductIdsForStoreId, List<List<Long>> quantityOfProductsForId, List<Long> entityIds) {
         List<SqlProductsInStores> productsInStores = new ArrayList<>();
+        int index = 0;
         for (int i = 0; i < storeList.size(); i++) {
             Long storeEntityId = storeList.get(i).getId();
             for (int j = 0; j < listOfProductIdsForStoreId.get(i).size(); j++) {
@@ -195,7 +199,9 @@ public class SqlDataInsertor {
                 data.setStoreId(storeEntityId);
                 Long quantity = quantityOfProductsForId.get(i).get(j);
                 data.setQuantity(quantity);
+                data.setEntityId(entityIds.get(index));
                 productsInStores.add(data);
+                index++;
             }
         }
         productsInStoresRepository.saveAll(productsInStores);

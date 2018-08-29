@@ -115,7 +115,7 @@ public class MongoDataInsertor {
         productRepository.saveAll(productDataList);
     }
 
-    public void insertCartData(List<MongoCart> cartDataList, List<MongoClient> clientList, List<Integer> clientIdForCartId, List<MongoProduct> productsList, List<List<Integer>> listOfProductIdsForCartId) {
+    public void insertCartData(List<MongoCart> cartDataList, List<MongoClient> clientList, List<Integer> clientIdForCartId, List<MongoProduct> productsList, List<List<Integer>> listOfProductIdsForCartId, List<Long> entityIds) {
         int index = 0;
         for (List<Integer> productIds : listOfProductIdsForCartId) {
             MongoCart cart = new MongoCart();
@@ -125,14 +125,14 @@ public class MongoDataInsertor {
                 products.add(productsList.get(productIndex));
             }
             cart.setProducts(products);
-         //   cart.setEntityId(Long.parseLong(record.get("entityId")));
+            cart.setEntityId(entityIds.get(index));
             cartDataList.add(cart);
             index++;
         }
         cartRepository.saveAll(cartDataList);
     }
 
-    public void insertOrderData(List<MongoOrder> orderDataList, List<MongoClient> clientList, List<Integer> clientIdForOrderId, List<MongoProduct> productsList, List<List<Integer>> listOfProductIdsForOrderId) {
+    public void insertOrderData(List<MongoOrder> orderDataList, List<MongoClient> clientList, List<Integer> clientIdForOrderId, List<MongoProduct> productsList, List<List<Integer>> listOfProductIdsForOrderId, List<Long> entityIds) {
         int index = 0;
         for (List<Integer> productIds : listOfProductIdsForOrderId) {
             MongoOrder order = new MongoOrder();
@@ -142,6 +142,7 @@ public class MongoDataInsertor {
                 products.add(productsList.get(productIndex));
             }
             order.setProducts(products);
+            order.setEntityId(entityIds.get(index));
             orderDataList.add(order);
             index++;
         }
@@ -185,8 +186,9 @@ public class MongoDataInsertor {
         transactionRepository.saveAll(transactionDataList);
     }
 
-    public void insertProductsInStores(List<MongoStore> storeList, List<MongoProduct> productsList, List<List<Integer>> listOfProductIdsForStoreId, List<List<Long>> quantityOfProductsForId) {
+    public void insertProductsInStores(List<MongoStore> storeList, List<MongoProduct> productsList, List<List<Integer>> listOfProductIdsForStoreId, List<List<Long>> quantityOfProductsForId, List<Long> entityIds) {
         List<MongoProductsInStores> productsInStores = new ArrayList<>();
+        int index = 0;
         for (int i = 0; i < storeList.size(); i++) {
             MongoStore storeEntity = storeList.get(i);
             for (int j = 0; j < listOfProductIdsForStoreId.get(i).size(); j++) {
@@ -196,7 +198,9 @@ public class MongoDataInsertor {
                 data.setStore(storeEntity);
                 Long quantity = quantityOfProductsForId.get(i).get(j);
                 data.setQuantity(quantity);
+                data.setEntityId(entityIds.get(index));
                 productsInStores.add(data);
+                index++;
             }
         }
         productsInStoresRepository.saveAll(productsInStores);
