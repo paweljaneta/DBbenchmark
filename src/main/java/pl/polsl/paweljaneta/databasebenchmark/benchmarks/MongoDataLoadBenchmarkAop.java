@@ -14,7 +14,7 @@ public class MongoDataLoadBenchmarkAop {
     private ExecutionTimeLogger executionTimeLogger;
 
     @Autowired
-    MongoDataLoadBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
+    public MongoDataLoadBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
         this.executionTimeLogger = executionTimeLogger;
         this.executionTimeLogger.setFileName("MongoDataLoadBenchmark");
     }

@@ -3,8 +3,6 @@ package pl.polsl.paweljaneta.databasebenchmark.dataInsertion;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.MongoDataInsertor;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.NeoDataInsertor;
@@ -26,7 +24,7 @@ import java.util.Random;
 
 @Component
 public class DataCreator {
-    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.ALL;
+    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.SQL;
 
     private final int NO_OF_CARTS = 20000;
     private final int NO_OF_ORDERS = 10000;
@@ -92,18 +90,19 @@ public class DataCreator {
     @Autowired
     private DatabaseCleaner databaseCleaner;
 
-    @EventListener(ApplicationReadyEvent.class)
+    //    @EventListener(ApplicationReadyEvent.class)
     public void createData() {
-        if(databaseToInsert==DatabaseToInsert.ALL){
+        createNewLists();
+        if (databaseToInsert == DatabaseToInsert.ALL) {
             databaseCleaner.cleanAll();
         }
-        if(databaseToInsert==DatabaseToInsert.SQL){
+        if (databaseToInsert == DatabaseToInsert.SQL) {
             databaseCleaner.cleanSql();
         }
-        if(databaseToInsert==DatabaseToInsert.MONGO){
+        if (databaseToInsert == DatabaseToInsert.MONGO) {
             databaseCleaner.cleanMongo();
         }
-        if(databaseToInsert==DatabaseToInsert.NEO4J){
+        if (databaseToInsert == DatabaseToInsert.NEO4J) {
             databaseCleaner.cleanNeo();
         }
 
@@ -119,6 +118,41 @@ public class DataCreator {
         createTransactionData();
         createProductsInStoresData();
         System.out.println("Data loading finished");
+    }
+
+    private void createNewLists() {
+        sqlClientAddresses = new ArrayList<>();
+        sqlStoreAddresses = new ArrayList<>();
+        sqlCarts = new ArrayList<>();
+        sqlClients = new ArrayList<>();
+        sqlDiscounts = new ArrayList<>();
+        sqlOrders = new ArrayList<>();
+        sqlProducts = new ArrayList<>();
+        sqlShipments = new ArrayList<>();
+        sqlStores = new ArrayList<>();
+        sqlTransactions = new ArrayList<>();
+
+        neoClientAddresses = new ArrayList<>();
+        neoStoreAddresses = new ArrayList<>();
+        neoCarts = new ArrayList<>();
+        neoClients = new ArrayList<>();
+        neoDiscounts = new ArrayList<>();
+        neoOrders = new ArrayList<>();
+        neoProducts = new ArrayList<>();
+        neoShipments = new ArrayList<>();
+        neoStores = new ArrayList<>();
+        neoTransactions = new ArrayList<>();
+
+        mongoClientAddresses = new ArrayList<>();
+        mongoStoreAddresses = new ArrayList<>();
+        mongoCarts = new ArrayList<>();
+        mongoClients = new ArrayList<>();
+        mongoDiscounts = new ArrayList<>();
+        mongoOrders = new ArrayList<>();
+        mongoProducts = new ArrayList<>();
+        mongoShipments = new ArrayList<>();
+        mongoStores = new ArrayList<>();
+        mongoTransactions = new ArrayList<>();
     }
 
     private Iterable<CSVRecord> loadCSV(String fileName) {
@@ -315,7 +349,7 @@ public class DataCreator {
         }
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
-           sqlDataInsertor.insertCartData(sqlCarts, sqlClients, clientIndexes, sqlProducts, productIndexes, entityIds);
+            sqlDataInsertor.insertCartData(sqlCarts, sqlClients, clientIndexes, sqlProducts, productIndexes, entityIds);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
             mongoDataInsertor.insertCartData(mongoCarts, mongoClients, clientIndexes, mongoProducts, productIndexes, entityIds);

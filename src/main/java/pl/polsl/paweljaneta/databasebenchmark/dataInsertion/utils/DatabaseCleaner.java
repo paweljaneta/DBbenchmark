@@ -74,16 +74,16 @@ public class DatabaseCleaner {
 
 
     public void cleanSql() {
-        sqladdressRepository.deleteAll();
-        sqlclientRepository.deleteAll();
-        sqlstoreRepository.deleteAll();
-        sqldiscountRepository.deleteAll();
-        sqlproductRepository.deleteAll();
-        sqlcartRepository.deleteAll();
-        sqlorderRepository.deleteAll();
-        sqlshipmentRepository.deleteAll();
-        sqltransactionRepository.deleteAll();
-        sqlproductsInStoresRepository.deleteAll();
+        sqlshipmentRepository.deleteAllInBatch();
+        sqlorderRepository.deleteAllInBatch();
+        sqlcartRepository.deleteAllInBatch();
+        sqltransactionRepository.deleteAllInBatch();
+        sqlproductsInStoresRepository.deleteAllInBatch();
+        sqlproductRepository.deleteAllInBatch();
+        sqldiscountRepository.deleteAllInBatch();
+        sqlclientRepository.deleteAllInBatch();
+        sqlstoreRepository.deleteAllInBatch();
+        sqladdressRepository.deleteAllInBatch();
     }
 
     public void cleanMongo() {

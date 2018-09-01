@@ -14,7 +14,7 @@ public class NeoDataLoadBenchmarkAop {
     private ExecutionTimeLogger executionTimeLogger;
 
     @Autowired
-    NeoDataLoadBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
+    public NeoDataLoadBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
         this.executionTimeLogger = executionTimeLogger;
         this.executionTimeLogger.setFileName("NeoDataLoadBenchmark");
     }

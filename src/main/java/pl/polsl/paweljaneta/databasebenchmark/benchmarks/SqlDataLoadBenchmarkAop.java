@@ -14,7 +14,7 @@ public class SqlDataLoadBenchmarkAop {
     private ExecutionTimeLogger executionTimeLogger;
 
     @Autowired
-    SqlDataLoadBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
+    public SqlDataLoadBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
         this.executionTimeLogger = executionTimeLogger;
         this.executionTimeLogger.setFileName("SqlDataLoadBenchmerk");
     }

@@ -19,6 +19,8 @@ public class SqlTransaction implements Serializable {
     @Id
     @GeneratedValue
     private Long transactionId;
+    @OneToOne
+    @JoinColumn(name = "storeId", referencedColumnName = "id")
     private SqlStore store;
     @ManyToMany
     @JoinTable(name = "TRANSACTION_PRODUCT", joinColumns = {
