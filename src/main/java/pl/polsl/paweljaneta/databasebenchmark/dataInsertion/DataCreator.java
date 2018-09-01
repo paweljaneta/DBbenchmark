@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.MongoDataInsertor;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.NeoDataInsertor;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.SqlDataInsertor;
+import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.utils.DatabaseCleaner;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.utils.IdGenerator;
 import pl.polsl.paweljaneta.databasebenchmark.model.DeliveryMode;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.*;
@@ -25,7 +26,7 @@ import java.util.Random;
 
 @Component
 public class DataCreator {
-    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.SQL;
+    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.ALL;
 
     private final int NO_OF_CARTS = 20000;
     private final int NO_OF_ORDERS = 10000;
@@ -88,12 +89,27 @@ public class DataCreator {
     @Autowired
     private NeoDataInsertor neoDataInsertor;
 
+    @Autowired
+    private DatabaseCleaner databaseCleaner;
+
     @EventListener(ApplicationReadyEvent.class)
     public void createData() {
+        if(databaseToInsert==DatabaseToInsert.ALL){
+            databaseCleaner.cleanAll();
+        }
+        if(databaseToInsert==DatabaseToInsert.SQL){
+            databaseCleaner.cleanSql();
+        }
+        if(databaseToInsert==DatabaseToInsert.MONGO){
+            databaseCleaner.cleanMongo();
+        }
+        if(databaseToInsert==DatabaseToInsert.NEO4J){
+            databaseCleaner.cleanNeo();
+        }
+
         createStoreAddressData();
         createClientAddressData();
         createClientData();
-
         createStoreData();
         createDiscountData();
         createProductData();
@@ -102,7 +118,6 @@ public class DataCreator {
         createShipmentData();
         createTransactionData();
         createProductsInStoresData();
-
         System.out.println("Data loading finished");
     }
 
@@ -157,107 +172,131 @@ public class DataCreator {
     }
 
     private void createClientAddressData() {
-        Iterable<CSVRecord> records = loadCSV("addressClients.csv");
+        String fileName = "addressClients.csv";
+        Iterable<CSVRecord> records;
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
+            records = loadCSV(fileName);
             sqlDataInsertor.insertClientAddressData(sqlClientAddresses, records);
             clientAddressSize = sqlClientAddresses.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
+            records = loadCSV(fileName);
             mongoDataInsertor.insertClientAddressData(mongoClientAddresses, records);
             clientAddressSize = mongoClientAddresses.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
+            records = loadCSV(fileName);
             neoDataInsertor.insertClientAddressData(neoClientAddresses, records);
             clientAddressSize = neoClientAddresses.size();
         }
     }
 
     private void createStoreAddressData() {
-        Iterable<CSVRecord> records = loadCSV("addressStores.csv");
+        String fileName = "addressStores.csv";
+        Iterable<CSVRecord> records;
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
+            records = loadCSV(fileName);
             sqlDataInsertor.insertStoreAddressData(sqlStoreAddresses, records);
             storeAddressSize = sqlStoreAddresses.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
+            records = loadCSV(fileName);
             mongoDataInsertor.insertStoreAddressData(mongoStoreAddresses, records);
             storeAddressSize = mongoStoreAddresses.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
+            records = loadCSV(fileName);
             neoDataInsertor.insertStoreAddressData(neoStoreAddresses, records);
             storeAddressSize = neoStoreAddresses.size();
         }
     }
 
     private void createClientData() {
-        Iterable<CSVRecord> records = loadCSV("clients.csv");
+        String fileName = "clients.csv";
+        Iterable<CSVRecord> records;
         List<Integer> addressIndexes = fillListWithIndexes(clientAddressSize - 1);
         Collections.shuffle(addressIndexes);
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
+            records = loadCSV(fileName);
             sqlDataInsertor.insertClientData(sqlClients, records, sqlClientAddresses, addressIndexes);
             clientsSize = sqlClients.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
+            records = loadCSV(fileName);
             mongoDataInsertor.insertClientData(mongoClients, records, mongoClientAddresses, addressIndexes);
             clientsSize = mongoClients.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
+            records = loadCSV(fileName);
             neoDataInsertor.insertClientData(neoClients, records, neoClientAddresses, addressIndexes);
             clientsSize = neoClients.size();
         }
     }
 
     private void createStoreData() {
-        Iterable<CSVRecord> records = loadCSV("stores.csv");
+        String fileName = "stores.csv";
+        Iterable<CSVRecord> records;
         List<Integer> addressIndexes = fillListWithIndexes(storeAddressSize - 1);
         Collections.shuffle(addressIndexes);
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
+            records = loadCSV(fileName);
             sqlDataInsertor.insertStoreData(sqlStores, records, sqlStoreAddresses, addressIndexes);
             storesSize = sqlStores.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
+            records = loadCSV(fileName);
             mongoDataInsertor.insertStoreData(mongoStores, records, mongoStoreAddresses, addressIndexes);
             storesSize = mongoStores.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
+            records = loadCSV(fileName);
             neoDataInsertor.insertStoreData(neoStores, records, neoStoreAddresses, addressIndexes);
             storesSize = neoStores.size();
         }
     }
 
     private void createDiscountData() {
-        Iterable<CSVRecord> records = loadCSV("discounts.csv");
+        String fileName = "discounts.csv";
+        Iterable<CSVRecord> records;
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
+            records = loadCSV(fileName);
             sqlDataInsertor.insertDiscountData(sqlDiscounts, records);
             discountsSize = sqlDiscounts.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
+            records = loadCSV(fileName);
             mongoDataInsertor.insertDiscountData(mongoDiscounts, records);
             discountsSize = mongoDiscounts.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
+            records = loadCSV(fileName);
             neoDataInsertor.insertDiscountData(neoDiscounts, records);
             discountsSize = neoDiscounts.size();
         }
     }
 
     private void createProductData() {
-        Iterable<CSVRecord> records = loadCSV("products.csv");
+        String fileName = "products.csv";
+        Iterable<CSVRecord> records;
         List<Integer> discountIndexes = fillListWithRandomIndexes(discountsSize - 1, NO_OF_PRODUCTS);
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
+            records = loadCSV(fileName);
             sqlDataInsertor.insertProductData(sqlProducts, records, sqlDiscounts, discountIndexes);
             productsSize = sqlProducts.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
+            records = loadCSV(fileName);
             mongoDataInsertor.insertProductData(mongoProducts, records, mongoDiscounts, discountIndexes);
             productsSize = mongoProducts.size();
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
+            records = loadCSV(fileName);
             neoDataInsertor.insertProductData(neoProducts, records, neoDiscounts, discountIndexes);
             productsSize = neoProducts.size();
         }
@@ -276,7 +315,7 @@ public class DataCreator {
         }
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
-            sqlDataInsertor.insertCartData(sqlCarts, sqlClients, clientIndexes, sqlProducts, productIndexes, entityIds);
+           sqlDataInsertor.insertCartData(sqlCarts, sqlClients, clientIndexes, sqlProducts, productIndexes, entityIds);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
             mongoDataInsertor.insertCartData(mongoCarts, mongoClients, clientIndexes, mongoProducts, productIndexes, entityIds);
@@ -313,25 +352,30 @@ public class DataCreator {
     }
 
     private void createShipmentData() {
-        Iterable<CSVRecord> records = loadCSV("shipments.csv");
+        String fileName = "shipments.csv";
+        Iterable<CSVRecord> records;
         List<Integer> ordersIndexes = fillListWithIndexes(ordersSize - 1);
         Collections.shuffle(ordersIndexes);
 
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
+            records = loadCSV(fileName);
             sqlDataInsertor.insertShipmentData(sqlShipments, records, sqlOrders, ordersIndexes);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
+            records = loadCSV(fileName);
             mongoDataInsertor.insertShipmentData(mongoShipments, records, mongoOrders, ordersIndexes);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
+            records = loadCSV(fileName);
             neoDataInsertor.insertShipmentData(neoShipments, records, neoOrders, ordersIndexes);
         }
     }
 
     private void createTransactionData() {
         Random random = new Random();
-        Iterable<CSVRecord> records = loadCSV("transactions.csv");
+        String fileName = "transactions.csv";
+        Iterable<CSVRecord> records;
 
         List<List<Integer>> productIndexes = new ArrayList<>();
         List<DeliveryMode> deliveryModes = new ArrayList<>();
@@ -349,12 +393,15 @@ public class DataCreator {
         List<Integer> storeIds = fillListWithRandomIndexes(storesSize - 1, NO_OF_TRANSACTIONS);
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
+            records = loadCSV(fileName);
             sqlDataInsertor.insertTransactionData(sqlTransactions, records, sqlStores, deliveryModes, storeIds, sqlProducts, productIndexes);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
+            records = loadCSV(fileName);
             mongoDataInsertor.insertTransactionData(mongoTransactions, records, mongoStores, deliveryModes, storeIds, mongoProducts, productIndexes);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
+            records = loadCSV(fileName);
             neoDataInsertor.insertTransactionData(neoTransactions, records, neoStores, deliveryModes, storeIds, neoProducts, productIndexes);
         }
     }
