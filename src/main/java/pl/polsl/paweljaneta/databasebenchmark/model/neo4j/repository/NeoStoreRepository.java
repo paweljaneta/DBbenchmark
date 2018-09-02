@@ -6,4 +6,5 @@ import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoStore;
 
 @Repository
 public interface NeoStoreRepository extends Neo4jRepository<NeoStore, Long> {
+    NeoStore findFirstByEntityId(Long entityId);
 }

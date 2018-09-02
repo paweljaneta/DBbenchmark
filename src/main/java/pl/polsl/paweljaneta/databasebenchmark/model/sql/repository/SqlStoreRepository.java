@@ -6,4 +6,5 @@ import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlStore;
 
 @Repository
 public interface SqlStoreRepository extends JpaRepository<SqlStore, Long> {
+    SqlStore findFirstByEntityId(Long entityId);
 }
