@@ -17,8 +17,8 @@ public class TestRunner {
 
     @Autowired
     TestRunner(LoadScenario loadScenario){
-        loadScenario.setNoOfRepeats(100);
-        scenarios.add(loadScenario);
+       // loadScenario.setNoOfRepeats(1);
+       // scenarios.add(loadScenario);
 
     }
 

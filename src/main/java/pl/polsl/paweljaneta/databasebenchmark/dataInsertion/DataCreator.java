@@ -4,6 +4,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.polsl.paweljaneta.databasebenchmark.dataConfig.DataConfig;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.MongoDataInsertor;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.NeoDataInsertor;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.SqlDataInsertor;
@@ -25,15 +26,6 @@ import java.util.Random;
 @Component
 public class DataCreator {
     private final DatabaseToInsert databaseToInsert = DatabaseToInsert.ALL;
-
-    private final int NO_OF_CARTS = 20000;
-    private final int NO_OF_ORDERS = 10000;
-    private final int NO_OF_TRANSACTIONS = 10000;
-    private final int MAX_NO_OF_PRODUCTS_IN_TRANSACTION_CART_ORDER = 15;
-    private final int MIN_NO_OF_PRODUCTS_IN_STORE = 100;
-    private final int MAX_NO_OF_PRODUCTS_IN_STORE = 5000;
-    private final int MAX_PRODUCT_QUANTITY = 100;
-    private final int NO_OF_PRODUCTS = 50000;
 
     private List<SqlAddress> sqlClientAddresses = new ArrayList<>();
     private List<SqlAddress> sqlStoreAddresses = new ArrayList<>();
@@ -89,6 +81,8 @@ public class DataCreator {
 
     @Autowired
     private DatabaseCleaner databaseCleaner;
+    @Autowired
+    private DataConfig dataConfig;
 
     //    @EventListener(ApplicationReadyEvent.class)
     public void createData() {
@@ -117,6 +111,7 @@ public class DataCreator {
         createShipmentData();
         createTransactionData();
         createProductsInStoresData();
+        createNewLists();
         System.out.println("Data loading finished");
     }
 
@@ -317,7 +312,7 @@ public class DataCreator {
     private void createProductData() {
         String fileName = "products.csv";
         Iterable<CSVRecord> records;
-        List<Integer> discountIndexes = fillListWithRandomIndexes(discountsSize - 1, NO_OF_PRODUCTS);
+        List<Integer> discountIndexes = fillListWithRandomIndexes(discountsSize - 1, dataConfig.NO_OF_PRODUCTS);
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
             records = loadCSV(fileName);
@@ -338,12 +333,12 @@ public class DataCreator {
 
     private void createCartData() {
         Random random = new Random();
-        List<Integer> clientIndexes = fillListWithRandomIndexes(clientsSize - 1, NO_OF_CARTS);
+        List<Integer> clientIndexes = fillListWithRandomIndexes(clientsSize - 1, dataConfig.NO_OF_CARTS);
         List<List<Integer>> productIndexes = new ArrayList<>();
-        List<Long> entityIds = fillListWithGeneratedEntityIds(NO_OF_CARTS, cartIdGenerator);
+        List<Long> entityIds = fillListWithGeneratedEntityIds(dataConfig.NO_OF_CARTS, cartIdGenerator);
 
-        for (int i = 0; i < NO_OF_CARTS; i++) {
-            int productNumber = 1 + random.nextInt(MAX_NO_OF_PRODUCTS_IN_TRANSACTION_CART_ORDER);
+        for (int i = 0; i < dataConfig.NO_OF_CARTS; i++) {
+            int productNumber = 1 + random.nextInt(dataConfig.MAX_NO_OF_PRODUCTS_IN_TRANSACTION_CART_ORDER);
             List<Integer> list = fillListWithRandomUniqueIndexes(productsSize - 1, productNumber);
             productIndexes.add(list);
         }
@@ -361,12 +356,12 @@ public class DataCreator {
 
     private void createOrderData() {
         Random random = new Random();
-        List<Integer> clientIndexes = fillListWithRandomIndexes(clientsSize - 1, NO_OF_ORDERS);
+        List<Integer> clientIndexes = fillListWithRandomIndexes(clientsSize - 1, dataConfig.NO_OF_ORDERS);
         List<List<Integer>> productIndexes = new ArrayList<>();
-        List<Long> entityIds = fillListWithGeneratedEntityIds(NO_OF_ORDERS, orderIdGenerator);
+        List<Long> entityIds = fillListWithGeneratedEntityIds(dataConfig.NO_OF_ORDERS, orderIdGenerator);
 
-        for (int i = 0; i < NO_OF_ORDERS; i++) {
-            int productNumber = 1 + random.nextInt(MAX_NO_OF_PRODUCTS_IN_TRANSACTION_CART_ORDER);
+        for (int i = 0; i < dataConfig.NO_OF_ORDERS; i++) {
+            int productNumber = 1 + random.nextInt(dataConfig.MAX_NO_OF_PRODUCTS_IN_TRANSACTION_CART_ORDER);
             List<Integer> list = fillListWithRandomUniqueIndexes(productsSize - 1, productNumber);
             productIndexes.add(list);
         }
@@ -415,8 +410,8 @@ public class DataCreator {
         List<DeliveryMode> deliveryModes = new ArrayList<>();
         DeliveryMode[] deliveryModeValues = DeliveryMode.values();
 
-        for (int i = 0; i < NO_OF_TRANSACTIONS; i++) {
-            int productNumber = 1 + random.nextInt(MAX_NO_OF_PRODUCTS_IN_TRANSACTION_CART_ORDER);
+        for (int i = 0; i < dataConfig.NO_OF_TRANSACTIONS; i++) {
+            int productNumber = 1 + random.nextInt(dataConfig.MAX_NO_OF_PRODUCTS_IN_TRANSACTION_CART_ORDER);
             List<Integer> list = fillListWithRandomUniqueIndexes(productsSize - 1, productNumber);
             productIndexes.add(list);
 
@@ -424,7 +419,7 @@ public class DataCreator {
             deliveryModes.add(deliveryModeValues[rnd]);
         }
 
-        List<Integer> storeIds = fillListWithRandomIndexes(storesSize - 1, NO_OF_TRANSACTIONS);
+        List<Integer> storeIds = fillListWithRandomIndexes(storesSize - 1, dataConfig.NO_OF_TRANSACTIONS);
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
             records = loadCSV(fileName);
@@ -448,13 +443,13 @@ public class DataCreator {
         List<Long> entityIds = new ArrayList<>();
 
         for (int i = 0; i < storesSize; i++) {
-            int noOfProducts = MIN_NO_OF_PRODUCTS_IN_STORE + random.nextInt(MAX_NO_OF_PRODUCTS_IN_STORE - MIN_NO_OF_PRODUCTS_IN_STORE + 1);
+            int noOfProducts = dataConfig.MIN_NO_OF_PRODUCTS_IN_STORE + random.nextInt(dataConfig.MAX_NO_OF_PRODUCTS_IN_STORE - dataConfig.MIN_NO_OF_PRODUCTS_IN_STORE + 1);
             List<Integer> listOfProductIndexes = fillListWithRandomUniqueIndexes(productsSize - 1, noOfProducts);
             productIndexes.add(listOfProductIndexes);
 
             List<Long> listOfQuantities = new ArrayList<>();
             for (Integer listOfProductIndex : listOfProductIndexes) {
-                long quantity = 1 + random.nextInt(MAX_PRODUCT_QUANTITY);
+                long quantity = 1 + random.nextInt(dataConfig.MAX_PRODUCT_QUANTITY);
                 listOfQuantities.add(quantity);
 
                 entityIds.add(productsInStoresIdGenerator.getId());
