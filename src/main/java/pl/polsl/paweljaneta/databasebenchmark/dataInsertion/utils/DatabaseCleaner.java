@@ -2,6 +2,7 @@ package pl.polsl.paweljaneta.databasebenchmark.dataInsertion.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.polsl.paweljaneta.databasebenchmark.benchmarks.SqlDatabaseCleanBenchmarkAop;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.*;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.*;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.*;
@@ -71,7 +72,6 @@ public class DatabaseCleaner {
     private NeoTransactionRepository neotransactionRepository;
     @Autowired
     private NeoProductsInStoresRepository neoproductsInStoresRepository;
-
 
     public void cleanSql() {
         sqlshipmentRepository.deleteAllInBatch();

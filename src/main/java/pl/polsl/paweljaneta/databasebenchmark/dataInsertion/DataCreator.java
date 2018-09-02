@@ -24,7 +24,7 @@ import java.util.Random;
 
 @Component
 public class DataCreator {
-    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.SQL;
+    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.ALL;
 
     private final int NO_OF_CARTS = 20000;
     private final int NO_OF_ORDERS = 10000;
