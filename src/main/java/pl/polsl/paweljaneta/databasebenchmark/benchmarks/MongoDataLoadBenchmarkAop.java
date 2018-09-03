@@ -19,7 +19,7 @@ public class MongoDataLoadBenchmarkAop {
         this.executionTimeLogger.setFileName("MongoDataLoadBenchmark");
     }
 
-    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.MongoDataInsertor.*(..))")
+    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.MongoDataInsertor.*(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object result = pjp.proceed();

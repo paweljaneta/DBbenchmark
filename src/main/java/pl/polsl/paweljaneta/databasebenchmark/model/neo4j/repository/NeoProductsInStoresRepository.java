@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface NeoProductsInStoresRepository extends Neo4jRepository<NeoProductsInStores, Long> {
-    List<NeoProductsInStores> findAllByStore(NeoStore store);
+    //Iterable<NeoProductsInStores> findAllByStoreId(Long storeId);
+    Iterable<NeoProductsInStores> findByStore(NeoStore store);
 }

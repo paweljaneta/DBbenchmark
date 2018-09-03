@@ -20,7 +20,7 @@ public class NeoDiscount implements Serializable {
     @GeneratedValue
     private Long id;
     private float discountValue;
-    @Relationship(type = "DISCOUNTS_IN_PRODUCTS", direction = Relationship.UNDIRECTED)
-    private Set<NeoProduct> products;
+   /* @Relationship(type = "DISCOUNTS_IN_PRODUCTS", direction = Relationship.UNDIRECTED)
+    private Set<NeoProduct> products;*/
     private Long entityId;
 }

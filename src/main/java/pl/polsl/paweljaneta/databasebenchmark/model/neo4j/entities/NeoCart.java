@@ -20,7 +20,7 @@ public class NeoCart implements Serializable {
     @GeneratedValue
     private Long id;
     private NeoClient client;
-    @Relationship(type = "PRODUCTS_IN_CART", direction = Relationship.UNDIRECTED)
+    //@Relationship(type = "PRODUCTS_IN_CART", direction = Relationship.UNDIRECTED)
     private List<NeoProduct> products;
     private Long entityId;
 }

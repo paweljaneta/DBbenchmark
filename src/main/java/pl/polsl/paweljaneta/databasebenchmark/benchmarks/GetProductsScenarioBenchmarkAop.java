@@ -21,8 +21,7 @@ public class GetProductsScenarioBenchmarkAop {
         this.executionTimeLogger.setFileName("GetProductsScenarioBenchmark");
     }
 
-    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.GetProductsScenario.*(..)) && " +
-            "@annotation(pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure)")
+    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.GetProductsScenarioMethods.*(..))&&@annotation(pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object result = pjp.proceed();

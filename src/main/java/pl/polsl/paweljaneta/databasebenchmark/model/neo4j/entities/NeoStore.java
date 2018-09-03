@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlAddress;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class NeoStore implements Serializable {
     @GeneratedValue
     private Long id;
     private String name;
+    @Relationship(type="HAS")
     private NeoAddress address;
     private Long entityId;
 }

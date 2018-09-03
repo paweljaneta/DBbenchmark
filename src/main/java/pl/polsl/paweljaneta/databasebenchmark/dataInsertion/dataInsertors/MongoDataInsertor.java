@@ -1,4 +1,4 @@
-package pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl;
+package pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors;
 
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;

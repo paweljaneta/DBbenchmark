@@ -1,19 +1,24 @@
 package pl.polsl.paweljaneta.databasebenchmark.testScenarios;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public abstract class BaseScenario {
-    protected int NO_OF_REPEATS=1;
+    private int NO_OF_REPEATS = 1;
 
     public void executeScenario() {
         before();
-        execute();
+        for (int i = 0; i < NO_OF_REPEATS; i++) {
+            execute();
+        }
         after();
     }
 
-    protected abstract void before();
+    public abstract void before();
 
-    protected abstract void execute();
+    public abstract void execute();
 
-    protected abstract void after();
+    public abstract void after();
 
     public void setNoOfRepeats(int noOfRepeats) {
         NO_OF_REPEATS = noOfRepeats;

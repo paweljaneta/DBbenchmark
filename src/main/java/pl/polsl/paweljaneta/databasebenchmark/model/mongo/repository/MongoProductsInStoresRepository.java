@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface MongoProductsInStoresRepository extends MongoRepository<MongoProductsInStores, String> {
-    List<MongoProductsInStores> findAllByStore(MongoStore store);
+    List<MongoProductsInStores> findAllByStoreId(String storeId);
 }

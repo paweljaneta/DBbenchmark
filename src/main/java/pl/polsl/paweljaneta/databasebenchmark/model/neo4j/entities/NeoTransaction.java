@@ -20,8 +20,9 @@ public class NeoTransaction implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    @Relationship(type="HAS")
     private NeoStore store;
-    @Relationship(type = "PRODUCTS_IN_TRANSACTIONS", direction = Relationship.OUTGOING)
+    //@Relationship(type = "PRODUCTS_IN_TRANSACTIONS", direction = Relationship.OUTGOING)
     private List<NeoProduct> products;
     private DeliveryMode deliveryMode;
     private Date date;

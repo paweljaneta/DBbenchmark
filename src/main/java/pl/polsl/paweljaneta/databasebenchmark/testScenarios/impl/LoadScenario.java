@@ -13,23 +13,21 @@ public class LoadScenario extends BaseScenario {
 
     @Autowired
     public LoadScenario(DataCreator dataCreator) {
-       this.dataCreator=dataCreator;
+        this.dataCreator = dataCreator;
     }
 
     @Override
-    protected void before() {
+    public void before() {
 
     }
 
     @Override
-    protected void execute() {
-        for (int i = 0; i < NO_OF_REPEATS; i++) {
-            dataCreator.createData();
-        }
+    public void execute() {
+        dataCreator.createData();
     }
 
     @Override
-    protected void after() {
+    public void after() {
 
     }
 }

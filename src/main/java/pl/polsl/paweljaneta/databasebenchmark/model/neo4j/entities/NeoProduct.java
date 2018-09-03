@@ -21,6 +21,7 @@ public class NeoProduct implements Serializable {
     private Long id;
     private String name;
     private float price;
+    @Relationship(type="HAS")
     private NeoDiscount discount;
     private Long entityId;
 

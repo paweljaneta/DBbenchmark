@@ -19,7 +19,7 @@ public class SqlDataLoadBenchmarkAop {
         this.executionTimeLogger.setFileName("SqlDataLoadBenchmerk");
     }
 
-    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.SqlDataInsertor.*(..))")
+    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.SqlDataInsertor.*(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object result = pjp.proceed();

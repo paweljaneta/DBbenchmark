@@ -5,6 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
+import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.GetProductsScenario;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.LoadScenario;
 
 import java.util.ArrayList;
@@ -16,9 +17,11 @@ public class TestRunner {
     private List<BaseScenario> scenarios = new ArrayList<>();
 
     @Autowired
-    TestRunner(LoadScenario loadScenario){
-       // loadScenario.setNoOfRepeats(1);
-       // scenarios.add(loadScenario);
+    TestRunner(LoadScenario loadScenario, GetProductsScenario getProductsScenario){
+        loadScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+       /* getProductsScenario.setNoOfRepeats(1);
+        scenarios.add(getProductsScenario);*/
 
     }
 

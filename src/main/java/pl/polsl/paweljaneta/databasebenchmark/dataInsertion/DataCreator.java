@@ -5,9 +5,9 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.dataConfig.DataConfig;
-import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.MongoDataInsertor;
-import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.NeoDataInsertor;
-import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.impl.SqlDataInsertor;
+import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.MongoDataInsertor;
+import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.NeoDataInsertor;
+import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.SqlDataInsertor;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.utils.DatabaseCleaner;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.utils.IdGenerator;
 import pl.polsl.paweljaneta.databasebenchmark.model.DeliveryMode;
@@ -25,7 +25,7 @@ import java.util.Random;
 
 @Component
 public class DataCreator {
-    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.ALL;
+    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.NEO4J;
 
     private List<SqlAddress> sqlClientAddresses = new ArrayList<>();
     private List<SqlAddress> sqlStoreAddresses = new ArrayList<>();

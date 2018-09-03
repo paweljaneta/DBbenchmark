@@ -9,22 +9,20 @@ import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.utils.ExecutionTimeL
 
 @Aspect
 @Configuration
-public class NeoDataLoadBenchmarkAop {
-
+public class ClientDataEditScenarioBenchmarkAop {
     private ExecutionTimeLogger executionTimeLogger;
 
     @Autowired
-    public NeoDataLoadBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
+    public ClientDataEditScenarioBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
         this.executionTimeLogger = executionTimeLogger;
-        this.executionTimeLogger.setFileName("NeoDataLoadBenchmark");
+        this.executionTimeLogger.setFileName("ClientDataEditScenarioBenchmark");
     }
 
-    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.NeoDataInsertor.*(..))")
+    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.ClientDataEditScenarioMethods.*(..))&&@annotation(pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object result = pjp.proceed();
         long endTime = System.currentTimeMillis();
-        System.out.println("neo_" + pjp.getSignature().getName() + ": " + (endTime - startTime) + "ms");
         executionTimeLogger.logExecutionTime(pjp.getSignature().getName(), (endTime - startTime));
         return result;
     }

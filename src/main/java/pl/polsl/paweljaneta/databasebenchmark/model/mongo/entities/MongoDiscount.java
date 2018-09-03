@@ -19,7 +19,7 @@ public class MongoDiscount implements Serializable {
     @Id
     private String id;
     private float discountValue;
-    @DBRef
-    private Set<MongoProduct> products;
+   /* @DBRef
+    private Set<MongoProduct> products;*/
     private Long entityId;
 }

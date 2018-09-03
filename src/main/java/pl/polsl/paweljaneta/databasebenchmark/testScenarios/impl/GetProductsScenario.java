@@ -18,6 +18,7 @@ import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlProductRep
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlProductsInStoresRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlStoreRepository;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
+import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.GetProductsScenarioMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,22 +26,16 @@ import java.util.Random;
 
 @Component
 public class GetProductsScenario extends BaseScenario {
-    @Autowired
+
     private DataConfig dataConfig;
+    private GetProductsScenarioMethods productsScenarioMethods;
+
+
     @Autowired
-    private SqlStoreRepository sqlStoreRepository;
-    @Autowired
-    private MongoStoreRepository mongoStoreRepository;
-    @Autowired
-    private NeoStoreRepository neoStoreRepository;
-    @Autowired
-    private SqlProductsInStoresRepository sqlProductsInStoresRepository;
-    @Autowired
-    private MongoProductsInStoresRepository mongoProductsInStoresRepository;
-    @Autowired
-    private NeoProductsInStoresRepository neoProductsInStoresRepository;
-    @Autowired
-    private SqlProductRepository sqlProductRepository;
+    public GetProductsScenario(DataConfig dataConfig, GetProductsScenarioMethods productsScenarioMethods){
+        this.dataConfig=dataConfig;
+        this.productsScenarioMethods=productsScenarioMethods;
+    }
 
     @Override
     public void before() {
@@ -52,17 +47,17 @@ public class GetProductsScenario extends BaseScenario {
     public void execute() {
         Long storeEntityId = getStoreEntityId();
 
-        SqlStore sqlStore = getSqlStoreByEntityId(storeEntityId);
-        MongoStore mongoStore = getMongoStoreByEntityId(storeEntityId);
-        NeoStore neoStore = getNeoStoreByEntityId(storeEntityId);
+        SqlStore sqlStore = productsScenarioMethods.getSqlStoreByEntityId(storeEntityId);
+        MongoStore mongoStore = productsScenarioMethods.getMongoStoreByEntityId(storeEntityId);
+        NeoStore neoStore = productsScenarioMethods.getNeoStoreByEntityId(storeEntityId);
 
-        AddressDTO sqlAddressFromStore = getSqlAddressFromStore(sqlStore);
-        AddressDTO mongoAddressFromStore = getMongoAddressFromStore(mongoStore);
-        AddressDTO neoAddressFromStore = getNeoAddressFromStore(neoStore);
+        AddressDTO sqlAddressFromStore = productsScenarioMethods.getSqlAddressFromStore(sqlStore);
+        AddressDTO mongoAddressFromStore = productsScenarioMethods.getMongoAddressFromStore(mongoStore);
+        AddressDTO neoAddressFromStore = productsScenarioMethods.getNeoAddressFromStore(neoStore);
 
-        List<ProductDTO> sqlProductsFromStore = getSqlProductsFromStore(sqlStore);
-        List<ProductDTO> mongoProductsFromStore = getMongoProductsFromStore(mongoStore);
-        List<ProductDTO> neoProductsFromStore = getNeoProductsFromStore(neoStore);
+        List<ProductDTO> sqlProductsFromStore = productsScenarioMethods.getSqlProductsFromStore(sqlStore);
+        List<ProductDTO> mongoProductsFromStore = productsScenarioMethods.getMongoProductsFromStore(mongoStore);
+        List<ProductDTO> neoProductsFromStore = productsScenarioMethods.getNeoProductsFromStore(neoStore);
 
         System.out.println(sqlAddressFromStore.getStreetNumber() + " " + mongoAddressFromStore.getStreetNumber() + " " + neoAddressFromStore.getStreetNumber());
         System.out.println(sqlProductsFromStore.size() + " " + mongoProductsFromStore.size() + " " + neoProductsFromStore.size());
@@ -78,99 +73,5 @@ public class GetProductsScenario extends BaseScenario {
         return Long.valueOf(random.nextInt(dataConfig.NO_OF_STORES));
     }
 
-    @ExecTimeMeasure
-    public SqlStore getSqlStoreByEntityId(Long id) {
-        return sqlStoreRepository.findFirstByEntityId(id);
-    }
 
-    @ExecTimeMeasure
-    public MongoStore getMongoStoreByEntityId(Long id) {
-        return mongoStoreRepository.findFirstByEntityId(id);
-    }
-
-    @ExecTimeMeasure
-    public NeoStore getNeoStoreByEntityId(Long id) {
-        return neoStoreRepository.findFirstByEntityId(id);
-    }
-
-    @ExecTimeMeasure
-    public AddressDTO getSqlAddressFromStore(SqlStore store) {
-        SqlAddress address = store.getAddress();
-        return new AddressDTO(address.getCity(), address.getPostalCode(), address.getStreet(), address.getStreetNumber(), address.getEntityId());
-    }
-
-    @ExecTimeMeasure
-    public AddressDTO getMongoAddressFromStore(MongoStore store) {
-        MongoAddress address = store.getAddress();
-        return new AddressDTO(address.getCity(), address.getPostalCode(), address.getStreet(), address.getStreetNumber(), address.getEntityId());
-    }
-
-    @ExecTimeMeasure
-    public AddressDTO getNeoAddressFromStore(NeoStore store) {
-        NeoAddress address = store.getAddress();
-        return new AddressDTO(address.getCity(), address.getPostalCode(), address.getStreet(), address.getStreetNumber(), address.getEntityId());
-    }
-
-    @ExecTimeMeasure
-    public List<ProductDTO> getSqlProductsFromStore(SqlStore store) {
-        List<ProductDTO> result = new ArrayList<>();
-        List<SqlProductsInStores> allByStoreId = sqlProductsInStoresRepository.findAllByStoreId(store.getId());
-        for (SqlProductsInStores sqlProductsInStores : allByStoreId) {
-            result.add(mapSqlProductToDTO(sqlProductRepository.getOne(sqlProductsInStores.getProductId())));
-        }
-        return result;
-    }
-
-    private ProductDTO mapSqlProductToDTO(SqlProduct product) {
-        return new ProductDTO(product.getName(), product.getPrice(), mapSqlDiscountToDTO(product.getDiscount()), product.getEntityId());
-    }
-
-    private DiscountDTO mapSqlDiscountToDTO(SqlDiscount discount) {
-        DiscountDTO discountDTO = new DiscountDTO();
-        discountDTO.setDiscountValue(discount.getDiscountValue());
-        discountDTO.setEntityId(discount.getEntityId());
-        return discountDTO;
-    }
-
-    @ExecTimeMeasure
-    public List<ProductDTO> getMongoProductsFromStore(MongoStore store) {
-        List<ProductDTO> result = new ArrayList<>();
-        List<MongoProductsInStores> allByStoreId = mongoProductsInStoresRepository.findAllByStore(store);
-        for (MongoProductsInStores mongoProductsInStores : allByStoreId) {
-            result.add(mapMongoProductToDTO(mongoProductsInStores.getProduct()));
-        }
-        return result;
-    }
-
-    private ProductDTO mapMongoProductToDTO(MongoProduct product) {
-        return new ProductDTO(product.getName(), product.getPrice(), mapMongoDiscountToDTO(product.getDiscount()), product.getEntityId());
-    }
-
-    private DiscountDTO mapMongoDiscountToDTO(MongoDiscount discount) {
-        DiscountDTO discountDTO = new DiscountDTO();
-        discountDTO.setDiscountValue(discount.getDiscountValue());
-        discountDTO.setEntityId(discount.getEntityId());
-        return discountDTO;
-    }
-
-    @ExecTimeMeasure
-    public List<ProductDTO> getNeoProductsFromStore(NeoStore store) {
-        List<ProductDTO> result = new ArrayList<>();
-        List<NeoProductsInStores> allByStoreId = neoProductsInStoresRepository.findAllByStore(store);
-        for (NeoProductsInStores neoProductsInStores : allByStoreId) {
-            result.add(mapNeoProductToDTO(neoProductsInStores.getProduct()));
-        }
-        return result;
-    }
-
-    private ProductDTO mapNeoProductToDTO(NeoProduct product) {
-        return new ProductDTO(product.getName(), product.getPrice(), mapNeoDiscountToDTO(product.getDiscount()), product.getEntityId());
-    }
-
-    private DiscountDTO mapNeoDiscountToDTO(NeoDiscount discount) {
-        DiscountDTO discountDTO = new DiscountDTO();
-        discountDTO.setDiscountValue(discount.getDiscountValue());
-        discountDTO.setEntityId(discount.getEntityId());
-        return discountDTO;
-    }
 }
