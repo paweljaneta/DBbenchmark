@@ -131,7 +131,7 @@ public class GetProductsScenarioMethods {
     @ExecTimeMeasure
     public List<ProductDTO> getNeoProductsFromStore(NeoStore store) {
         List<ProductDTO> result = new ArrayList<>();
-        Iterable<NeoProductsInStores> allByStoreId = neoProductsInStoresRepository.findByStore(store.getId());
+        Iterable<NeoProductsInStores> allByStoreId = neoProductsInStoresRepository.findByStoreId(store.getId());
         for (NeoProductsInStores neoProductsInStores : allByStoreId) {
             result.add(mapNeoProductToDTO(neoProductsInStores.getProduct()));
         }
