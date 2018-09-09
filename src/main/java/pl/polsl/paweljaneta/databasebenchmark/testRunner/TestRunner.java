@@ -18,10 +18,10 @@ public class TestRunner {
 
     @Autowired
     TestRunner(LoadScenario loadScenario, GetProductsScenario getProductsScenario){
-        loadScenario.setNoOfRepeats(1);
-        scenarios.add(loadScenario);
-       /* getProductsScenario.setNoOfRepeats(1);
-        scenarios.add(getProductsScenario);*/
+       /* loadScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);*/
+        getProductsScenario.setNoOfRepeats(1);
+        scenarios.add(getProductsScenario);
 
     }
 

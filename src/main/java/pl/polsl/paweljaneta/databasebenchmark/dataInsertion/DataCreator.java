@@ -25,7 +25,7 @@ import java.util.Random;
 
 @Component
 public class DataCreator {
-    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.NEO4J;
+    private final DatabaseToInsert databaseToInsert = DatabaseToInsert.ALL;
 
     private List<SqlAddress> sqlClientAddresses = new ArrayList<>();
     private List<SqlAddress> sqlStoreAddresses = new ArrayList<>();

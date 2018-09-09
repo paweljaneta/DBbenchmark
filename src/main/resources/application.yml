@@ -17,21 +17,55 @@ spring:
           lob:
             non_contextual_creation: true
         show_sql: false
+
+#  datasource:
+#     url: jdbc:postgresql://31.179.227.58:10000/benchmarkDB
+#     username: postgres
+#     password: 3RjFh2DVg23AswZf
+#     driver-class-name: org.postgresql.Driver
+#     name: benchmarkDB
+#  data:
+#     mongodb:
+#       uri: mongodb://admin:3RjFh2DVg23AswZf@31.179.227.58:10002/
+#       port: 10002
+#       database: benchmarkDB
+#       username: admin
+#       password: 3RjFh2DVg23AswZf
+#       authentication-database: admin
+#     neo4j:
+#       uri: bolt://31.179.227.58:10003/benchmarkDB
+#       username: neo4j
+#       password: 3RjFh2DVg23AswZf
   datasource:
-    url: jdbc:postgresql://localhost:10000/benchmarkDB
-    username: application
-    password: application
-    driver-class-name: org.postgresql.Driver
-    name: benchmarkDB
+     url: jdbc:postgresql://192.168.2.20:10000/benchmarkDB
+     username: postgres
+     password: 3RjFh2DVg23AswZf
+     driver-class-name: org.postgresql.Driver
+     name: benchmarkDB
   data:
-    mongodb:
-      uri: mongodb://localhost:10002/
-      port: 10002
-      database: benchmarkDB
-    neo4j:
-      uri: bolt://localhost:10003/benchmarkDB
-      username: neo4j
-      password: admin
+     mongodb:
+       uri: mongodb://admin:3RjFh2DVg23AswZf@192.168.2.20:10002/
+       port: 10002
+       database: benchmarkDB
+     neo4j:
+       uri: bolt://192.168.2.20:10003/benchmarkDB
+       username: neo4j
+       password: 3RjFh2DVg23AswZf
+#  datasource:
+#    url: jdbc:postgresql://localhost:10000/benchmarkDB
+#    username: application
+#    password: application
+#    driver-class-name: org.postgresql.Driver
+#    name: benchmarkDB
+#  data:
+#    mongodb:
+#      uri: mongodb://localhost:10002/
+#      port: 10002
+#      database: benchmarkDB
+#    neo4j:
+#      uri: bolt://localhost:10003/benchmarkDB
+#      username: neo4j
+#      password: admin
 
 server:
   port: 9000
