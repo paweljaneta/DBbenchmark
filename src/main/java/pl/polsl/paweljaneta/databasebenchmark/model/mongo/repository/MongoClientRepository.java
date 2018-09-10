@@ -8,4 +8,6 @@ import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoClient;
 public interface MongoClientRepository extends MongoRepository<MongoClient, String> {
     MongoClient findByEntityId(Long entityId);
 
+    MongoClient findByEmail(String email);
+
 }
