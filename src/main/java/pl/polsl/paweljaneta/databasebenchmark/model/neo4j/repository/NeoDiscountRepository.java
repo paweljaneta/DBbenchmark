@@ -6,4 +6,5 @@ import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoDiscount;
 
 @Repository
 public interface NeoDiscountRepository extends Neo4jRepository<NeoDiscount, Long> {
+    NeoDiscount findByEntityId(Long entityId);
 }

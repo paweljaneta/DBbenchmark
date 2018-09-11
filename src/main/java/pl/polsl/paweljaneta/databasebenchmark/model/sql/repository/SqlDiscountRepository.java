@@ -6,4 +6,5 @@ import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlDiscount;
 
 @Repository
 public interface SqlDiscountRepository  extends JpaRepository<SqlDiscount, Long> {
+    SqlDiscount findByEntityId(Long entityId);
 }
