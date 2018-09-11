@@ -83,7 +83,7 @@ public class AddProductToStoreScenarioMethods {
     }
 
     @ExecTimeMeasure
-    public MongoDiscount mongoGetDiscountByEntityID(Long entityId) {
+    public MongoDiscount mongoGetDiscountByEntityId(Long entityId) {
         return mongoDiscountRepository.findByEntityId(entityId);
     }
 
