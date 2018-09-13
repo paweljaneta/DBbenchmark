@@ -194,8 +194,8 @@ public class MongoDataInsertor {
             for (int j = 0; j < listOfProductIdsForStoreId.get(i).size(); j++) {
                 MongoProductsInStores data = new MongoProductsInStores();
                 MongoProduct productEntity = productsList.get(listOfProductIdsForStoreId.get(i).get(j));
-                data.setProduct(productEntity);
-                data.setStore(storeEntity);
+                data.setProductId(productEntity.getId());
+                data.setStoreId(storeEntity.getId());
                 Long quantity = quantityOfProductsForId.get(i).get(j);
                 data.setQuantity(quantity);
                 data.setEntityId(entityIds.get(index));

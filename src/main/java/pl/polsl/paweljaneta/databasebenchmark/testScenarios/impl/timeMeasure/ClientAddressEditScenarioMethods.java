@@ -5,12 +5,14 @@ import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoAddress;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoClient;
+import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoAddressRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoClientRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoAddress;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoClient;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoClientRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlAddress;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlClient;
+import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlAddressRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlClientRepository;
 
 @Component
@@ -24,12 +26,18 @@ public class ClientAddressEditScenarioMethods {
     @Autowired
     private NeoClientRepository neoClientRepository;
 
+    @Autowired
+    private SqlAddressRepository sqlAddressRepository;
+
+    @Autowired
+    private MongoAddressRepository mongoAddressRepository;
+
     @ExecTimeMeasure
     public void changeSqlClientAddressData(Long entityId) {
         SqlClient sqlClient = findSqlClient(entityId);
         SqlAddress sqlAddress = findSqlAddress(sqlClient);
         editSqlAddressData(sqlAddress);
-        saveSqlClientData(sqlClient);
+        sqlAddressRepository.save(sqlAddress);
     }
 
     private SqlClient findSqlClient(Long entityId) {
@@ -56,7 +64,7 @@ public class ClientAddressEditScenarioMethods {
         MongoClient mongoClient = findMongoClient(entityId);
         MongoAddress mongoAddress = findMongoAddress(mongoClient);
         editMongoAddressData(mongoAddress);
-        saveMongoClientData(mongoClient);
+        mongoAddressRepository.save(mongoAddress);
     }
 
     private MongoClient findMongoClient(Long entityId) {

@@ -10,5 +10,4 @@ public class SqlProductsInStoresPK implements Serializable {
     private Long storeId;
     @Id
     private Long productId;
-    private Long entityId;
 }

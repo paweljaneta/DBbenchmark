@@ -7,6 +7,7 @@ import pl.polsl.paweljaneta.databasebenchmark.dto.AddressDTO;
 import pl.polsl.paweljaneta.databasebenchmark.dto.DiscountDTO;
 import pl.polsl.paweljaneta.databasebenchmark.dto.ProductDTO;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.*;
+import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoProductRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoProductsInStoresRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoStoreRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.*;
@@ -37,13 +38,15 @@ public class GetProductsScenarioMethods {
 
     private SqlProductRepository sqlProductRepository;
 
+    private MongoProductRepository mongoProductRepository;
+
     @Autowired
     public GetProductsScenarioMethods(SqlStoreRepository sqlStoreRepository,
                                       MongoStoreRepository mongoStoreRepository, NeoStoreRepository neoStoreRepository,
                                       SqlProductsInStoresRepository sqlProductsInStoresRepository,
                                       MongoProductsInStoresRepository mongoProductsInStoresRepository,
                                       NeoProductsInStoresRepository neoProductsInStoresRepository,
-                                      SqlProductRepository sqlProductRepository) {
+                                      SqlProductRepository sqlProductRepository, MongoProductRepository mongoProductRepository) {
         this.sqlStoreRepository = sqlStoreRepository;
         this.mongoStoreRepository = mongoStoreRepository;
         this.neoStoreRepository = neoStoreRepository;
@@ -51,6 +54,7 @@ public class GetProductsScenarioMethods {
         this.mongoProductsInStoresRepository = mongoProductsInStoresRepository;
         this.neoProductsInStoresRepository = neoProductsInStoresRepository;
         this.sqlProductRepository = sqlProductRepository;
+        this.mongoProductRepository = mongoProductRepository;
     }
 
     @ExecTimeMeasure
@@ -112,7 +116,7 @@ public class GetProductsScenarioMethods {
         List<ProductDTO> result = new ArrayList<>();
         List<MongoProductsInStores> allByStoreId = mongoProductsInStoresRepository.findAllByStoreId(store.getId());
         for (MongoProductsInStores mongoProductsInStores : allByStoreId) {
-            result.add(mapMongoProductToDTO(mongoProductsInStores.getProduct()));
+            result.add(mapMongoProductToDTO(mongoProductRepository.findById(mongoProductsInStores.getProductId()).get()));
         }
         return result;
     }

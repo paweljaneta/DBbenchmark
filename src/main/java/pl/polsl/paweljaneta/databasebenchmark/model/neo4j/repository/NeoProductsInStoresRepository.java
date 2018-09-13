@@ -14,6 +14,6 @@ public interface NeoProductsInStoresRepository extends Neo4jRepository<NeoProduc
     @Query("MATCH (disc:discount)<-[rd:HAS]-(prod:product)<-[r:HAS]-(prodInStores:productsInStores)-[:HAS]->(store) WHERE ID(store) = {storeId} RETURN prodInStores,r,prod,rd,disc")
     List<NeoProductsInStores> findByStoreId(@Param("storeId") Long storeId);
 
-    @Query("MATCH (disc:discount)<-[rd:HAS]-(prod:product)<-[r:HAS]-(prodInStores:productsInStores)-[:HAS]->(store) WHERE ID(store) = {storeId} AND ID(product) = {productId} RETURN prodInStores,r,prod,rd,disc")
+    @Query("MATCH (disc:discount)<-[rd:HAS]-(prod:product)<-[r:HAS]-(prodInStores:productsInStores)-[:HAS]->(store) WHERE ID(store) = {storeId} AND ID(prod) = {productId} RETURN prodInStores,r,prod,rd,disc")
     NeoProductsInStores findFirstByProductIdAndStoreId(@Param("productId") Long productId, @Param("storeId") Long storeId);
 }

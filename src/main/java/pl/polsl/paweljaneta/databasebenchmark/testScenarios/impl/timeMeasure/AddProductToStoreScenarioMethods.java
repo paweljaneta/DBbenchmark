@@ -8,6 +8,7 @@ import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoProductsInStores;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoStore;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoDiscountRepository;
+import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoProductRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoProductsInStoresRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoStoreRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoDiscount;
@@ -15,6 +16,7 @@ import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoProductsInStores;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoStore;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoDiscountRepository;
+import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoProductRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoProductsInStoresRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoStoreRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlDiscount;
@@ -22,6 +24,7 @@ import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlProductsInStores;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlStore;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlDiscountRepository;
+import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlProductRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlProductsInStoresRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlStoreRepository;
 
@@ -33,6 +36,8 @@ public class AddProductToStoreScenarioMethods {
     private SqlProductsInStoresRepository sqlProductsInStoresRepository;
     @Autowired
     private SqlDiscountRepository sqlDiscountRepository;
+    @Autowired
+    private SqlProductRepository sqlProductRepository;
 
     @Autowired
     private MongoStoreRepository mongoStoreRepository;
@@ -40,6 +45,8 @@ public class AddProductToStoreScenarioMethods {
     private MongoProductsInStoresRepository mongoProductsInStoresRepository;
     @Autowired
     private MongoDiscountRepository mongoDiscountRepository;
+    @Autowired
+    private MongoProductRepository mongoProductRepository;
 
     @Autowired
     private NeoStoreRepository neoStoreRepository;
@@ -47,6 +54,9 @@ public class AddProductToStoreScenarioMethods {
     private NeoProductsInStoresRepository neoProductsInStoresRepository;
     @Autowired
     private NeoDiscountRepository neoDiscountRepository;
+    @Autowired
+    private NeoProductRepository neoProductRepository;
+
 
     @ExecTimeMeasure
     public SqlStore sqlGetStoreByEntityId(Long storeEntityId) {
@@ -64,6 +74,7 @@ public class AddProductToStoreScenarioMethods {
         result.setName("New Product");
         result.setPrice(8f);
         result.setDiscount(discount);
+        sqlProductRepository.save(result);
         return result;
     }
 
@@ -93,6 +104,7 @@ public class AddProductToStoreScenarioMethods {
         result.setName("New Product");
         result.setPrice(8f);
         result.setDiscount(discount);
+        mongoProductRepository.save(result);
         return result;
     }
 
@@ -100,8 +112,8 @@ public class AddProductToStoreScenarioMethods {
     public void mongoCreateProductInStore(MongoProduct product, MongoStore store, Long quantity) {
         MongoProductsInStores mongoProductsInStores = new MongoProductsInStores();
         mongoProductsInStores.setQuantity(quantity);
-        mongoProductsInStores.setStore(store);
-        mongoProductsInStores.setProduct(product);
+        mongoProductsInStores.setStoreId(store.getId());
+        mongoProductsInStores.setProductId(product.getId());
         mongoProductsInStoresRepository.save(mongoProductsInStores);
     }
 
@@ -122,6 +134,7 @@ public class AddProductToStoreScenarioMethods {
         result.setName("New Product");
         result.setPrice(8f);
         result.setDiscount(discount);
+        neoProductRepository.save(result);
         return result;
     }
 

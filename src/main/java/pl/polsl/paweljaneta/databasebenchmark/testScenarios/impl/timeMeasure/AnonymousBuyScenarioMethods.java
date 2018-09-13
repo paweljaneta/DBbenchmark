@@ -70,12 +70,12 @@ public class AnonymousBuyScenarioMethods {
 
     @ExecTimeMeasure
     public List<SqlProduct> sqlGetProductsFromStore(SqlStore store) {
-        List<SqlProduct> products = new ArrayList<>();
+        List<Long> productIds = new ArrayList<>();
         List<SqlProductsInStores> allByStoreId = sqlProductsInStoresRepository.findAllByStoreId(store.getId());
         for (SqlProductsInStores sqlProductsInStores : allByStoreId) {
-            products.add(sqlProductRepository.findById(sqlProductsInStores.getProductId()).get());
+            productIds.add(sqlProductsInStores.getProductId());
         }
-        return products;
+        return sqlProductRepository.findByProductIdIn(productIds);
     }
 
     @ExecTimeMeasure
@@ -85,6 +85,9 @@ public class AnonymousBuyScenarioMethods {
 
     @ExecTimeMeasure
     public void sqlAddProductToCart(SqlCart cart, SqlProduct product) {
+        if (cart.getProducts() == null) {
+            cart.setProducts(new ArrayList<SqlProduct>());
+        }
         cart.getProducts().add(product);
         sqlCartRepository.save(cart);
     }
@@ -139,7 +142,7 @@ public class AnonymousBuyScenarioMethods {
         List<MongoProduct> products = new ArrayList<>();
         List<MongoProductsInStores> allByStoreId = mongoProductsInStoresRepository.findAllByStoreId(store.getId());
         for (MongoProductsInStores mongoProductsInStores : allByStoreId) {
-            products.add(mongoProductRepository.findById(mongoProductsInStores.getId()).get());
+            products.add(mongoProductRepository.findById(mongoProductsInStores.getProductId()).get());
         }
         return products;
     }
@@ -151,6 +154,9 @@ public class AnonymousBuyScenarioMethods {
 
     @ExecTimeMeasure
     public void mongoAddProductToCart(MongoCart cart, MongoProduct product) {
+        if (cart.getProducts() == null) {
+            cart.setProducts(new ArrayList<MongoProduct>());
+        }
         cart.getProducts().add(product);
         mongoCartRepository.save(cart);
     }
@@ -205,7 +211,8 @@ public class AnonymousBuyScenarioMethods {
         List<NeoProduct> products = new ArrayList<>();
         List<NeoProductsInStores> allByStoreId = neoProductsInStoresRepository.findByStoreId(store.getId());
         for (NeoProductsInStores neoProductsInStores : allByStoreId) {
-            products.add(neoProductRepository.findById(neoProductsInStores.getId()).get());
+            // products.add(neoProductRepository.findById(neoProductsInStores.getProduct().getId()).get());
+            products.add(neoProductsInStores.getProduct());
         }
         return products;
     }
@@ -217,6 +224,9 @@ public class AnonymousBuyScenarioMethods {
 
     @ExecTimeMeasure
     public void neoAddProductToCart(NeoCart cart, NeoProduct product) {
+        if (cart.getProducts() == null) {
+            cart.setProducts(new ArrayList<NeoProduct>());
+        }
         cart.getProducts().add(product);
         neoCartRepository.save(cart);
     }
