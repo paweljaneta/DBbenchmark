@@ -21,11 +21,12 @@ public class NeoDataLoadBenchmarkAop {
 
     @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.NeoDataInsertor.*(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
+        System.out.println("START: "+pjp.getTarget().getClass().getCanonicalName());
         long startTime = System.currentTimeMillis();
         Object result = pjp.proceed();
         long endTime = System.currentTimeMillis();
-        System.out.println("neo_" + pjp.getSignature().getName() + ": " + (endTime - startTime) + "ms");
         executionTimeLogger.logExecutionTime(pjp.getSignature().getName(), (endTime - startTime));
+        System.out.println(pjp.getTarget().getClass().getCanonicalName()+'.'+pjp.getSignature().getName() + ": " + (endTime - startTime) + "ms");
         return result;
     }
 }

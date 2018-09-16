@@ -15,50 +15,44 @@ public class TestRunner {
 
     private List<BaseScenario> scenarios = new ArrayList<>();
 
-    /*@Autowired
-    TestRunner(LoadScenario loadScenario, GetProductsScenario getProductsScenario){
-       *//* loadScenario.setNoOfRepeats(1);
-        scenarios.add(loadScenario);*//*
-        getProductsScenario.setNoOfRepeats(1);
-        scenarios.add(getProductsScenario);
-
-    }*/
-
     @Autowired
     public TestRunner(AddProductToStoreScenario addProductToStoreScenario, AnonymousBuyScenario anonymousBuyScenario,
                       ClientAddressEditScenario clientAddressEditScenario, ClientDataEditScenario clientDataEditScenario,
                       GetProductsScenario getProductsScenario, LoadScenario loadScenario, LoggedBuyScenario loggedBuyScenario,
                       RemoveObsoleteCartsScenario removeObsoleteCartsScenario) {
 
-       /*addProductToStoreScenario.setNoOfRepeats(1);
-        scenarios.add(addProductToStoreScenario);*/ //działa
+        loadScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario); //działa
 
-      /*  anonymousBuyScenario.setNoOfRepeats(1);
-        scenarios.add(anonymousBuyScenario);*/  //działa spróbować zoptymalizować pobieranie produktów mongo
+       addProductToStoreScenario.setNoOfRepeats(100);
+        scenarios.add(addProductToStoreScenario); //działa
 
-       /* clientAddressEditScenario.setNoOfRepeats(1);
-        scenarios.add(clientAddressEditScenario); */ //działa
+        anonymousBuyScenario.setNoOfRepeats(100);
+        scenarios.add(anonymousBuyScenario);  //działa spróbować zoptymalizować pobieranie produktów mongo
 
-       /* clientDataEditScenario.setNoOfRepeats(1);
-        scenarios.add(clientDataEditScenario);*/ //działa
+        clientAddressEditScenario.setNoOfRepeats(100);
+        scenarios.add(clientAddressEditScenario);  //działa
 
-       /* getProductsScenario.setNoOfRepeats(1);
-        scenarios.add(getProductsScenario);*/  //działa
+        clientDataEditScenario.setNoOfRepeats(100);
+        scenarios.add(clientDataEditScenario); //działa
 
-       /* loadScenario.setNoOfRepeats(1);
-        scenarios.add(loadScenario);*/ //działa
+        getProductsScenario.setNoOfRepeats(100);
+        scenarios.add(getProductsScenario);  //działa
 
-       /* loggedBuyScenario.setNoOfRepeats(1);
-        scenarios.add(loggedBuyScenario);*/ //działa + jak w anonimowym
+        loggedBuyScenario.setNoOfRepeats(100);
+        scenarios.add(loggedBuyScenario); //działa + jak w anonimowym
 
-        /*removeObsoleteCartsScenario.setNoOfRepeats(1);
-        scenarios.add(removeObsoleteCartsScenario);*/ //działa
+        removeObsoleteCartsScenario.setNoOfRepeats(100);
+        scenarios.add(removeObsoleteCartsScenario); //działa
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void runTests() {
         for (BaseScenario scenario : scenarios) {
+            System.out.println("Scenario: "+scenario.getClass().getCanonicalName()+" start");
             scenario.executeScenario();
+            System.out.println("Scenario: "+scenario.getClass().getCanonicalName()+" finish");
         }
+        System.out.println("Tests finished");
     }
 }
