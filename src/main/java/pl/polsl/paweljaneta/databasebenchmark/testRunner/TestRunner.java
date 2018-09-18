@@ -21,28 +21,28 @@ public class TestRunner {
                       GetProductsScenario getProductsScenario, LoadScenario loadScenario, LoggedBuyScenario loggedBuyScenario,
                       RemoveObsoleteCartsScenario removeObsoleteCartsScenario) {
 
-        loadScenario.setNoOfRepeats(1);
+        /*loadScenario.setNoOfRepeats(1);
         scenarios.add(loadScenario); //działa
 
-       /*addProductToStoreScenario.setNoOfRepeats(100);
+        addProductToStoreScenario.setNoOfRepeats(1);
         scenarios.add(addProductToStoreScenario); //działa
 
-        anonymousBuyScenario.setNoOfRepeats(100);
+        anonymousBuyScenario.setNoOfRepeats(1);
         scenarios.add(anonymousBuyScenario);  //działa spróbować zoptymalizować pobieranie produktów mongo
 
-        clientAddressEditScenario.setNoOfRepeats(100);
+        clientAddressEditScenario.setNoOfRepeats(1);
         scenarios.add(clientAddressEditScenario);  //działa
 
-        clientDataEditScenario.setNoOfRepeats(100);
+        clientDataEditScenario.setNoOfRepeats(1);
         scenarios.add(clientDataEditScenario); //działa
 
-        getProductsScenario.setNoOfRepeats(100);
+        getProductsScenario.setNoOfRepeats(1);
         scenarios.add(getProductsScenario);  //działa
 
-        loggedBuyScenario.setNoOfRepeats(100);
+        loggedBuyScenario.setNoOfRepeats(1);
         scenarios.add(loggedBuyScenario); //działa + jak w anonimowym
 
-        removeObsoleteCartsScenario.setNoOfRepeats(100);
+        removeObsoleteCartsScenario.setNoOfRepeats(1);
         scenarios.add(removeObsoleteCartsScenario); //działa*/
     }
 
