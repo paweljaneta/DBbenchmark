@@ -16,9 +16,7 @@ public class MongoProductsInStores implements Serializable {
 
     @Id
     private String id;
-
     private String storeId;
-
     private String productId;
     private Long quantity;
     private Long entityId;

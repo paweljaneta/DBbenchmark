@@ -24,7 +24,7 @@ public class TestRunner {
         loadScenario.setNoOfRepeats(1);
         scenarios.add(loadScenario); //działa
 
-       addProductToStoreScenario.setNoOfRepeats(100);
+       /*addProductToStoreScenario.setNoOfRepeats(100);
         scenarios.add(addProductToStoreScenario); //działa
 
         anonymousBuyScenario.setNoOfRepeats(100);
@@ -43,7 +43,7 @@ public class TestRunner {
         scenarios.add(loggedBuyScenario); //działa + jak w anonimowym
 
         removeObsoleteCartsScenario.setNoOfRepeats(100);
-        scenarios.add(removeObsoleteCartsScenario); //działa
+        scenarios.add(removeObsoleteCartsScenario); //działa*/
     }
 
     @EventListener(ApplicationReadyEvent.class)

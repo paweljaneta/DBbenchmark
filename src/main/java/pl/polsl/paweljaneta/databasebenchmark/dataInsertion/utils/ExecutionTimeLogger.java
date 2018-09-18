@@ -29,6 +29,6 @@ public class ExecutionTimeLogger {
     }
 
     public void logExecutionTime(String methodName, Long durationMs) {
-        printWriter.println(new Date() + separator + methodName + separator + durationMs);
+        printWriter.println(new Date().getTime() + separator + methodName + separator + durationMs);
     }
 }

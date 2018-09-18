@@ -7,7 +7,8 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import pl.polsl.paweljaneta.databasebenchmark.model.DeliveryMode;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,8 @@ public class NeoTransaction implements Serializable {
     private Long id;
     @Relationship(type="HAS")
     private NeoStore store;
-    //@Relationship(type = "PRODUCTS_IN_TRANSACTIONS", direction = Relationship.OUTGOING)
+    @Relationship(type = "HAS")
+    private NeoClient client;
     private List<NeoProduct> products;
     private DeliveryMode deliveryMode;
     private Date date;

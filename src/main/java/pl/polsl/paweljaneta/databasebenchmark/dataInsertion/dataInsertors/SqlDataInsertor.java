@@ -168,13 +168,14 @@ public class SqlDataInsertor {
         shipmentRepository.saveAll(shipmentDataList);
     }
 
-    public void insertTransactionData(List<SqlTransaction> transactionDataList, Iterable<CSVRecord> records, List<SqlStore> storeList, List<DeliveryMode> deliveryModeList, List<Integer> storeIdForTransactionId, List<SqlProduct> productsList, List<List<Integer>> listOfProductIdsForTransactionId) {
+    public void insertTransactionData(List<SqlTransaction> transactionDataList, Iterable<CSVRecord> records, List<SqlStore> storeList, List<DeliveryMode> deliveryModeList, List<Integer> storeIdForTransactionId, List<SqlProduct> productsList, List<List<Integer>> listOfProductIdsForTransactionId, List<SqlClient> clientList, List<Integer> listOfClientIds) {
         int index = 0;
         for (CSVRecord record : records) {
             SqlTransaction transaction = new SqlTransaction();
             transaction.setDate(new Date(Long.parseLong(record.get("date")) * 1000));
             transaction.setDeliveryMode(deliveryModeList.get(index));
             transaction.setStore(storeList.get(storeIdForTransactionId.get(index)));
+            transaction.setClient(clientList.get(listOfClientIds.get(index)));
             List<SqlProduct> products = new ArrayList<>();
             for (Integer productId : listOfProductIdsForTransactionId.get(index)) {
                 products.add(productsList.get(productId));

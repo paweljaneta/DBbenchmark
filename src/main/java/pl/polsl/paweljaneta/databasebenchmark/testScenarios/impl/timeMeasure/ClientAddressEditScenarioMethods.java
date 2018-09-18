@@ -72,7 +72,7 @@ public class ClientAddressEditScenarioMethods {
     }
 
     private MongoAddress findMongoAddress(MongoClient client) {
-        return client.getAddress();
+        return mongoAddressRepository.findById(client.getAddressId()).get();
     }
 
     private void editMongoAddressData(MongoAddress address) {

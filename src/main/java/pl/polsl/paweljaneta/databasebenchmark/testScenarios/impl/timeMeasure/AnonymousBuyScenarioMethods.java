@@ -173,7 +173,7 @@ public class AnonymousBuyScenarioMethods {
     public MongoTransaction mongoCreateTransaction(MongoOrder order, MongoStore store, DeliveryMode deliveryMode) {
         MongoTransaction transaction = new MongoTransaction();
         transaction.setProducts(order.getProducts());
-        transaction.setStore(store);
+        transaction.setStoreId(store.getId());
         transaction.setDeliveryMode(deliveryMode);
         transaction.setDate(new Date());
         mongoTransactionRepository.save(transaction);

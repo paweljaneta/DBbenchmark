@@ -409,6 +409,7 @@ public class DataCreator {
         List<List<Integer>> productIndexes = new ArrayList<>();
         List<DeliveryMode> deliveryModes = new ArrayList<>();
         DeliveryMode[] deliveryModeValues = DeliveryMode.values();
+        List<Integer> clientIndexes = fillListWithRandomIndexes(clientsSize - 1, dataConfig.NO_OF_TRANSACTIONS);
 
         for (int i = 0; i < dataConfig.NO_OF_TRANSACTIONS; i++) {
             int productNumber = 1 + random.nextInt(dataConfig.MAX_NO_OF_PRODUCTS_IN_TRANSACTION_CART_ORDER);
@@ -423,15 +424,15 @@ public class DataCreator {
 
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.SQL)) {
             records = loadCSV(fileName);
-            sqlDataInsertor.insertTransactionData(sqlTransactions, records, sqlStores, deliveryModes, storeIds, sqlProducts, productIndexes);
+            sqlDataInsertor.insertTransactionData(sqlTransactions, records, sqlStores, deliveryModes, storeIds, sqlProducts, productIndexes, sqlClients, clientIndexes);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.MONGO)) {
             records = loadCSV(fileName);
-            mongoDataInsertor.insertTransactionData(mongoTransactions, records, mongoStores, deliveryModes, storeIds, mongoProducts, productIndexes);
+            mongoDataInsertor.insertTransactionData(mongoTransactions, records, mongoStores, deliveryModes, storeIds, mongoProducts, productIndexes, mongoClients, clientIndexes);
         }
         if (databaseToInsert.equals(DatabaseToInsert.ALL) || databaseToInsert.equals(DatabaseToInsert.NEO4J)) {
             records = loadCSV(fileName);
-            neoDataInsertor.insertTransactionData(neoTransactions, records, neoStores, deliveryModes, storeIds, neoProducts, productIndexes);
+            neoDataInsertor.insertTransactionData(neoTransactions, records, neoStores, deliveryModes, storeIds, neoProducts, productIndexes, neoClients, clientIndexes);
         }
     }
 

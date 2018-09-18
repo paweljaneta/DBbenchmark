@@ -69,7 +69,7 @@ public class MongoDataInsertor {
             client.setName(record.get("name"));
             client.setPhoneNumber(record.get("phoneNumber"));
             client.setEmail(record.get("email"));
-            client.setAddress(addressList.get(addressIndexes.get(index)));
+            client.setAddressId(addressList.get(addressIndexes.get(index)).getId());
             client.setEntityId(Long.parseLong(record.get("entityId")));
             clientDataList.add(client);
             index++;
@@ -107,7 +107,7 @@ public class MongoDataInsertor {
             MongoProduct product = new MongoProduct();
             product.setName(record.get("name"));
             product.setPrice(Float.parseFloat(record.get("price").replace(',', '.')));
-            product.setDiscount(discountList.get(discountIdForProductId.get(index)));
+            product.setDiscountId(discountList.get(discountIdForProductId.get(index)).getId());
             product.setEntityId(Long.parseLong(record.get("entityId")));
             productDataList.add(product);
             index++;
@@ -167,13 +167,14 @@ public class MongoDataInsertor {
         shipmentRepository.saveAll(shipmentDataList);
     }
 
-    public void insertTransactionData(List<MongoTransaction> transactionDataList, Iterable<CSVRecord> records, List<MongoStore> storeList, List<DeliveryMode> deliveryModeList, List<Integer> storeIdForTransactionId, List<MongoProduct> productsList, List<List<Integer>> listOfProductIdsForTransactionId) {
+    public void insertTransactionData(List<MongoTransaction> transactionDataList, Iterable<CSVRecord> records, List<MongoStore> storeList, List<DeliveryMode> deliveryModeList, List<Integer> storeIdForTransactionId, List<MongoProduct> productsList, List<List<Integer>> listOfProductIdsForTransactionId, List<MongoClient> clientList, List<Integer> listOfClientIds) {
         int index = 0;
         for (CSVRecord record : records) {
             MongoTransaction transaction = new MongoTransaction();
             transaction.setDate(new Date(Long.parseLong(record.get("date")) * 1000));
             transaction.setDeliveryMode(deliveryModeList.get(index));
-            transaction.setStore(storeList.get(storeIdForTransactionId.get(index)));
+            transaction.setStoreId(storeList.get(storeIdForTransactionId.get(index)).getId());
+            transaction.setClientId(clientList.get(listOfClientIds.get(index)).getId());
             List<MongoProduct> products = new ArrayList<>();
             for (Integer productId : listOfProductIdsForTransactionId.get(index)) {
                 products.add(productsList.get(productId));

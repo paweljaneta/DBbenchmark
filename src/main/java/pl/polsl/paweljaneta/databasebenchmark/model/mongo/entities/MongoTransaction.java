@@ -3,11 +3,10 @@ package pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import pl.polsl.paweljaneta.databasebenchmark.model.DeliveryMode;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,8 +18,8 @@ import java.util.List;
 public class MongoTransaction implements Serializable {
     @Id
     private String id;
-    @DBRef
-    private MongoStore store;
+    private String storeId;
+    private String clientId;
     private List<MongoProduct> products;
     private DeliveryMode deliveryMode;
     private Date date;

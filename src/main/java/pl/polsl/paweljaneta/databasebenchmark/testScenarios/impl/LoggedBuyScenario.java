@@ -30,6 +30,7 @@ public class LoggedBuyScenario extends BaseScenario {
         this.dataConfig = dataConfig;
         this.loggedBuyScenarioMethods = loggedBuyScenarioMethods;
     }
+
     @Override
     public void before() {
 
@@ -70,9 +71,9 @@ public class LoggedBuyScenario extends BaseScenario {
         MongoOrder mongoOrder = loggedBuyScenarioMethods.mongoCreateOrder(mongoCart, mongoClient);
         NeoOrder neoOrder = loggedBuyScenarioMethods.neoCreateOrder(neoCart, neoClient);
 
-        loggedBuyScenarioMethods.sqlCreateTransaction(sqlOrder, sqlStore, DeliveryMode.SHIPMENT);
-        loggedBuyScenarioMethods.mongoCreateTransaction(mongoOrder, mongoStore, DeliveryMode.SHIPMENT);
-        loggedBuyScenarioMethods.neoCreateTransaction(neoOrder, neoStore, DeliveryMode.SHIPMENT);
+        loggedBuyScenarioMethods.sqlCreateTransaction(sqlOrder, sqlStore, DeliveryMode.SHIPMENT, sqlClient);
+        loggedBuyScenarioMethods.mongoCreateTransaction(mongoOrder, mongoStore, DeliveryMode.SHIPMENT, mongoClient);
+        loggedBuyScenarioMethods.neoCreateTransaction(neoOrder, neoStore, DeliveryMode.SHIPMENT, neoClient);
 
         loggedBuyScenarioMethods.sqlCreateShipment(sqlOrder);
         loggedBuyScenarioMethods.mongoCreateShipment(mongoOrder);

@@ -112,10 +112,11 @@ public class LoggedBuyScenarioMethods {
     }
 
     @ExecTimeMeasure
-    public SqlTransaction sqlCreateTransaction(SqlOrder order, SqlStore store, DeliveryMode deliveryMode) {
+    public SqlTransaction sqlCreateTransaction(SqlOrder order, SqlStore store, DeliveryMode deliveryMode, SqlClient client) {
         SqlTransaction transaction = new SqlTransaction();
         transaction.setProducts(order.getProducts());
         transaction.setStore(store);
+        transaction.setClient(client);
         transaction.setDeliveryMode(deliveryMode);
         transaction.setDate(new Date());
         sqlTransactionRepository.save(transaction);
@@ -182,10 +183,11 @@ public class LoggedBuyScenarioMethods {
     }
 
     @ExecTimeMeasure
-    public MongoTransaction mongoCreateTransaction(MongoOrder order, MongoStore store, DeliveryMode deliveryMode) {
+    public MongoTransaction mongoCreateTransaction(MongoOrder order, MongoStore store, DeliveryMode deliveryMode, MongoClient client) {
         MongoTransaction transaction = new MongoTransaction();
         transaction.setProducts(order.getProducts());
-        transaction.setStore(store);
+        transaction.setStoreId(store.getId());
+        transaction.setClientId(client.getId());
         transaction.setDeliveryMode(deliveryMode);
         transaction.setDate(new Date());
         mongoTransactionRepository.save(transaction);
@@ -227,7 +229,6 @@ public class LoggedBuyScenarioMethods {
         List<NeoProduct> products = new ArrayList<>();
         List<NeoProductsInStores> allByStoreId = neoProductsInStoresRepository.findByStoreId(store.getId());
         for (NeoProductsInStores neoProductsInStores : allByStoreId) {
-            // products.add(neoProductRepository.findById(neoProductsInStores.getProduct().getId()).get());
             products.add(neoProductsInStores.getProduct());
         }
         return products;
@@ -257,10 +258,11 @@ public class LoggedBuyScenarioMethods {
     }
 
     @ExecTimeMeasure
-    public NeoTransaction neoCreateTransaction(NeoOrder order, NeoStore store, DeliveryMode deliveryMode) {
+    public NeoTransaction neoCreateTransaction(NeoOrder order, NeoStore store, DeliveryMode deliveryMode, NeoClient client) {
         NeoTransaction transaction = new NeoTransaction();
         transaction.setProducts(order.getProducts());
         transaction.setStore(store);
+        transaction.setClient(client);
         transaction.setDeliveryMode(deliveryMode);
         transaction.setDate(new Date());
         neoTransactionRepository.save(transaction);

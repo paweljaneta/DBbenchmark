@@ -103,7 +103,7 @@ public class AddProductToStoreScenarioMethods {
         MongoProduct result = new MongoProduct();
         result.setName("New Product");
         result.setPrice(8f);
-        result.setDiscount(discount);
+        result.setDiscountId(discount.getId());
         mongoProductRepository.save(result);
         return result;
     }
