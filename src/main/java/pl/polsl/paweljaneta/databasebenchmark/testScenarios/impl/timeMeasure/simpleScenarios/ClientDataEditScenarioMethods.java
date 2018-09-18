@@ -1,4 +1,4 @@
-package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure;
+package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.simpleScenarios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,6 @@ import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoClient;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoClientRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlClient;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlClientRepository;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
 
 @Component
 public class ClientDataEditScenarioMethods {

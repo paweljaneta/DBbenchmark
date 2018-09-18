@@ -1,4 +1,4 @@
-package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl;
+package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.simpleScenarios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -7,7 +7,7 @@ import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoCart;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoCart;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlCart;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.RemoveObsoleteCartsScenarioMethods;
+import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.simpleScenarios.RemoveObsoleteCartsScenarioMethods;
 
 import java.util.ArrayList;
 import java.util.List;

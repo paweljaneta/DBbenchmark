@@ -5,7 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.*;
+import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.simpleScenarios.*;
 
 import java.util.ArrayList;
 import java.util.List;

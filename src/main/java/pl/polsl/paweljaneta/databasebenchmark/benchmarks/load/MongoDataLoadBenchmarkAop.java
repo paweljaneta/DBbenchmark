@@ -1,4 +1,4 @@
-package pl.polsl.paweljaneta.databasebenchmark.benchmarks;
+package pl.polsl.paweljaneta.databasebenchmark.benchmarks.load;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -11,17 +11,17 @@ import java.util.Date;
 
 @Aspect
 @Configuration
-public class SqlDataLoadBenchmarkAop {
+public class MongoDataLoadBenchmarkAop {
 
     private ExecutionTimeLogger executionTimeLogger;
 
     @Autowired
-    public SqlDataLoadBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
+    public MongoDataLoadBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
         this.executionTimeLogger = executionTimeLogger;
-        this.executionTimeLogger.setFileName("SqlDataLoadBenchmark");
+        this.executionTimeLogger.setFileName("MongoDataLoadBenchmark");
     }
 
-    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.SqlDataInsertor.*(..))")
+    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.MongoDataInsertor.*(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         System.out.println(new Date() + " START: " + pjp.getTarget().getClass().getCanonicalName() + "." + pjp.getSignature().getName() + "()");
         long startTime = System.currentTimeMillis();

@@ -1,4 +1,4 @@
-package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure;
+package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.simpleScenarios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

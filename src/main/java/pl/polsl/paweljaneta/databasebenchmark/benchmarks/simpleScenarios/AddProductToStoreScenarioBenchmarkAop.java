@@ -1,4 +1,4 @@
-package pl.polsl.paweljaneta.databasebenchmark.benchmarks;
+package pl.polsl.paweljaneta.databasebenchmark.benchmarks.simpleScenarios;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -11,16 +11,16 @@ import java.util.Date;
 
 @Aspect
 @Configuration
-public class AnonymousBuyScenarioBenchmarkAop {
+public class AddProductToStoreScenarioBenchmarkAop {
     private ExecutionTimeLogger executionTimeLogger;
 
     @Autowired
-    public AnonymousBuyScenarioBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
+    public AddProductToStoreScenarioBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
         this.executionTimeLogger = executionTimeLogger;
-        this.executionTimeLogger.setFileName("AnonymousBuyScenarioBenchmark");
+        this.executionTimeLogger.setFileName("AddProductToStoreScenarioBenchmark");
     }
 
-    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.AnonymousBuyScenarioMethods.*(..))&&@annotation(pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure)")
+    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.simpleScenarios.AddProductToStoreScenarioMethods.*(..))&&@annotation(pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         System.out.println(new Date() + " START: " + pjp.getTarget().getClass().getCanonicalName() + "." + pjp.getSignature().getName() + "()");
         long startTime = System.currentTimeMillis();

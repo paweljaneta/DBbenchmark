@@ -1,4 +1,4 @@
-package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl;
+package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.simpleScenarios;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -10,7 +10,7 @@ import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.*;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.*;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.*;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.LoggedBuyScenarioMethods;
+import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.simpleScenarios.LoggedBuyScenarioMethods;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

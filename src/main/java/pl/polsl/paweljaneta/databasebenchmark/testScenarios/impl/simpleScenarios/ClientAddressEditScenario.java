@@ -1,10 +1,10 @@
-package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl;
+package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.simpleScenarios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.dataConfig.DataConfig;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.ClientAddressEditScenarioMethods;
+import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.simpleScenarios.ClientAddressEditScenarioMethods;
 
 import java.util.Random;
 

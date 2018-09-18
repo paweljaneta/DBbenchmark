@@ -1,4 +1,4 @@
-package pl.polsl.paweljaneta.databasebenchmark.benchmarks;
+package pl.polsl.paweljaneta.databasebenchmark.benchmarks.load;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -11,16 +11,17 @@ import java.util.Date;
 
 @Aspect
 @Configuration
-public class AddProductToStoreScenarioBenchmarkAop {
+public class NeoDataLoadBenchmarkAop {
+
     private ExecutionTimeLogger executionTimeLogger;
 
     @Autowired
-    public AddProductToStoreScenarioBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
+    public NeoDataLoadBenchmarkAop(ExecutionTimeLogger executionTimeLogger) {
         this.executionTimeLogger = executionTimeLogger;
-        this.executionTimeLogger.setFileName("AddProductToStoreScenarioBenchmark");
+        this.executionTimeLogger.setFileName("NeoDataLoadBenchmark");
     }
 
-    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.AddProductToStoreScenarioMethods.*(..))&&@annotation(pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure)")
+    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.dataInsertion.dataInsertors.NeoDataInsertor.*(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         System.out.println(new Date() + " START: " + pjp.getTarget().getClass().getCanonicalName() + "." + pjp.getSignature().getName() + "()");
         long startTime = System.currentTimeMillis();

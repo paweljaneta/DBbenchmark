@@ -1,4 +1,4 @@
-package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl;
+package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.simpleScenarios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlOrder;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlStore;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.AnonymousBuyScenarioMethods;
+import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.simpleScenarios.AnonymousBuyScenarioMethods;
 
 import java.util.ArrayList;
 import java.util.List;
