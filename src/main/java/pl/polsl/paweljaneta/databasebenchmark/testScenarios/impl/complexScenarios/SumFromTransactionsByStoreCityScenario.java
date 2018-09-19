@@ -1,6 +1,7 @@
 package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.complexScenarios;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoStore;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoTransaction;
@@ -15,17 +16,21 @@ import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoTransact
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlStore;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlTransaction;
+import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlProductRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlStoreRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlTransactionRepository;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
 
 import java.util.*;
 
-public class SumFromTransactionsByStoreCity extends BaseScenario {
+@Component
+public class SumFromTransactionsByStoreCityScenario extends BaseScenario {
     @Autowired
     private SqlStoreRepository sqlStoreRepository;
     @Autowired
     private SqlTransactionRepository sqlTransactionRepository;
+    @Autowired
+    private SqlProductRepository sqlProductRepository;
     @Autowired
     private MongoStoreRepository mongoStoreRepository;
     @Autowired
@@ -44,7 +49,21 @@ public class SumFromTransactionsByStoreCity extends BaseScenario {
 
     @Override
     public void execute() {
+        List<SqlStore> sqlStores = sqlGetAllStores();
+        Map<String, List<SqlStore>> citySqlStoresMap = sqlGetAllStoreCities(sqlStores);
+        Map<String, Float> citySqlSumMap = sqlCalculateSumForCity(citySqlStoresMap);
 
+        List<MongoStore> mongoStores = mongoGetAllStores();
+        Map<String, List<MongoStore>> cityMongoStoresMap = mongoGetAllStoreCities(mongoStores);
+        Map<String, Float> cityMongoSumMap = mongoCalculateSumForCity(cityMongoStoresMap);
+
+        List<NeoStore> neoStores = neoGetAllStores();
+        Map<String, List<NeoStore>> cityNeoStoresMap = neoGetAllStoreCities(neoStores);
+        Map<String, Float> cityNeoSumMap = neoCalculateSumForCity(cityNeoStoresMap);
+
+        System.out.println(cityMongoSumMap);
+        System.out.println(citySqlSumMap);
+        System.out.println(cityNeoSumMap);
     }
 
     @Override
@@ -76,7 +95,7 @@ public class SumFromTransactionsByStoreCity extends BaseScenario {
         for (SqlStore store : stores) {
             List<SqlTransaction> transactionsByStoreId = sqlTransactionRepository.findAllByStoreId(store.getId());
             for (SqlTransaction transaction : transactionsByStoreId) {
-                List<SqlProduct> products = transaction.getProducts();
+                List<SqlProduct> products = sqlProductRepository.findAllByTransactionsIn(Collections.singletonList(transaction));
                 for (SqlProduct product : products) {
                     sum += product.getPrice() * product.getDiscount().getDiscountValue() / 100.0f;
                 }

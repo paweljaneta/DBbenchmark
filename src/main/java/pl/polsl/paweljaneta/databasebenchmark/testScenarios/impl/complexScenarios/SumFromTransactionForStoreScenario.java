@@ -1,6 +1,7 @@
 package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.complexScenarios;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoStore;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoTransaction;
@@ -15,19 +16,24 @@ import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoTransact
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlStore;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlTransaction;
+import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlProductRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlStoreRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlTransactionRepository;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SumFromTransactionForStore extends BaseScenario {
+@Component
+public class SumFromTransactionForStoreScenario extends BaseScenario {
     @Autowired
     private SqlStoreRepository sqlStoreRepository;
     @Autowired
     private SqlTransactionRepository sqlTransactionRepository;
+    @Autowired
+    private SqlProductRepository sqlProductRepository;
 
     @Autowired
     private MongoStoreRepository mongoStoreRepository;
@@ -48,7 +54,18 @@ public class SumFromTransactionForStore extends BaseScenario {
 
     @Override
     public void execute() {
+        List<SqlStore> sqlStores = sqlGetAllStores();
+        Map<SqlStore, Float> sqlStorePriceMap = sqlCalculateTransactionSumForStore(sqlStores);
 
+        List<MongoStore> mongoStores = mongoGetAllStores();
+        Map<MongoStore, Float> mongoStorePriceMap = mongoCalculateTransactionSumForStore(mongoStores);
+
+        Iterable<NeoStore> neoStores = neoGetAllStores();
+        Map<NeoStore, Float> neoStorePriceMap = neoCalculateTransactionSumForStore(neoStores);
+
+        System.out.println(sqlStorePriceMap);
+        System.out.println(mongoStorePriceMap);
+        System.out.println(neoStorePriceMap);
     }
 
     @Override
@@ -66,7 +83,7 @@ public class SumFromTransactionForStore extends BaseScenario {
             float sum = 0.0f;
             List<SqlTransaction> transactionsByStoreId = sqlTransactionRepository.findAllByStoreId(store.getId());
             for (SqlTransaction transaction : transactionsByStoreId) {
-                List<SqlProduct> products = transaction.getProducts();
+                List<SqlProduct> products = sqlProductRepository.findAllByTransactionsIn(Collections.singletonList(transaction));
                 for (SqlProduct product : products) {
                     sum += product.getPrice() * product.getDiscount().getDiscountValue() / 100.0f;
                 }
