@@ -25,56 +25,79 @@ public class TestRunner {
                       SumFromTransactionsForClientCityScenario sumFromTransactionsForClientCityScenario, SumFromTransactionsForDeliveryModeScenario sumFromTransactionsForDeliveryModeScenario,
                       CashSpentForClientScenario cashSpentForClientScenario, InWhichShopClientMadeShoppingOftenScenario inWhichShopClientMadeShoppingOftenScenario) {
 
-        loadScenario.setNoOfRepeats(1);
+        loadScenario.setNoOfRepeats(10);
         scenarios.add(loadScenario);
 
-        addProductToStoreScenario.setNoOfRepeats(1);
+        addProductToStoreScenario.setNoOfRepeats(100);
         scenarios.add(addProductToStoreScenario);
 
-        anonymousBuyScenario.setNoOfRepeats(1);
+        loadScenario.setNoOfRepeats(100);
+        scenarios.add(loadScenario);
+
+        anonymousBuyScenario.setNoOfRepeats(100);
         scenarios.add(anonymousBuyScenario);
 
-        clientAddressEditScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+
+        clientAddressEditScenario.setNoOfRepeats(100);
         scenarios.add(clientAddressEditScenario);
 
-        clientDataEditScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+
+        clientDataEditScenario.setNoOfRepeats(100);
         scenarios.add(clientDataEditScenario);
 
-        getProductsScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+
+        getProductsScenario.setNoOfRepeats(100);
         scenarios.add(getProductsScenario);
 
-        loggedBuyScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+
+        loggedBuyScenario.setNoOfRepeats(100);
         scenarios.add(loggedBuyScenario);
 
-        removeObsoleteCartsScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+
+        removeObsoleteCartsScenario.setNoOfRepeats(100);
         scenarios.add(removeObsoleteCartsScenario);
 
+        //complex
+        scenarios.add(loadScenario);
 
-        sumFromTransactionForStoreScenario.setNoOfRepeats(1);
+        sumFromTransactionForStoreScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionForStoreScenario);
 
-        sumFromTransactionsByStoreCityScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+
+        sumFromTransactionsByStoreCityScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionsByStoreCityScenario);
 
-        sumFromTransactionsForClientCityScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+
+        sumFromTransactionsForClientCityScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionsForClientCityScenario);
 
-        sumFromTransactionsForDeliveryModeScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+
+        sumFromTransactionsForDeliveryModeScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionsForDeliveryModeScenario);
 
-        cashSpentForClientScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+
+        cashSpentForClientScenario.setNoOfRepeats(100);
         scenarios.add(cashSpentForClientScenario);
 
-        inWhichShopClientMadeShoppingOftenScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
+
+        inWhichShopClientMadeShoppingOftenScenario.setNoOfRepeats(100);
         scenarios.add(inWhichShopClientMadeShoppingOftenScenario);
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void runTests() {
         for (BaseScenario scenario : scenarios) {
-            System.out.println("Scenario: "+scenario.getClass().getCanonicalName()+" start");
             scenario.executeScenario();
-            System.out.println("Scenario: "+scenario.getClass().getCanonicalName()+" finish");
         }
         System.out.println("Tests finished");
     }
