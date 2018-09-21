@@ -1,7 +1,8 @@
-package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.complexScenarios;
+package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.complexScenarios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure;
 import pl.polsl.paweljaneta.databasebenchmark.model.DeliveryMode;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoTransaction;
@@ -14,7 +15,6 @@ import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlTransaction;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlProductRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlTransactionRepository;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class SumFromTransactionsForDeliveryMode extends BaseScenario {
+public class SumFromTransactionsForDeliveryModeScenarioMethods {
     @Autowired
     private SqlTransactionRepository sqlTransactionRepository;
     @Autowired
@@ -34,27 +34,7 @@ public class SumFromTransactionsForDeliveryMode extends BaseScenario {
     @Autowired
     private NeoTransactionRepository neoTransactionRepository;
 
-    @Override
-    public void before() {
-
-    }
-
-    @Override
-    public void execute() {
-        Map<DeliveryMode, Float> deliveryModeSqlSumMap = sqlGetTransactionsSumForDeliveryMode();
-        Map<DeliveryMode, Float> deliveryModeMongoSumMap = mongoGetTransactionsSumForDeliveryMode();
-        Map<DeliveryMode, Float> deliveryModeNeoSumMap = neoGetTransactionsSumForDeliveryMode();
-
-        System.out.println(deliveryModeSqlSumMap);
-        System.out.println(deliveryModeMongoSumMap);
-        System.out.println(deliveryModeNeoSumMap);
-    }
-
-    @Override
-    public void after() {
-
-    }
-
+    @ExecTimeMeasure
     public Map<DeliveryMode, Float> sqlGetTransactionsSumForDeliveryMode() {
         Map<DeliveryMode, Float> result = new HashMap<>();
         for (DeliveryMode deliveryMode : DeliveryMode.values()) {
@@ -71,6 +51,7 @@ public class SumFromTransactionsForDeliveryMode extends BaseScenario {
         return result;
     }
 
+    @ExecTimeMeasure
     public Map<DeliveryMode, Float> mongoGetTransactionsSumForDeliveryMode() {
         Map<DeliveryMode, Float> result = new HashMap<>();
         for (DeliveryMode deliveryMode : DeliveryMode.values()) {
@@ -87,6 +68,7 @@ public class SumFromTransactionsForDeliveryMode extends BaseScenario {
         return result;
     }
 
+    @ExecTimeMeasure
     public Map<DeliveryMode, Float> neoGetTransactionsSumForDeliveryMode() {
         Map<DeliveryMode, Float> result = new HashMap<>();
         for (DeliveryMode deliveryMode : DeliveryMode.values()) {
@@ -102,6 +84,4 @@ public class SumFromTransactionsForDeliveryMode extends BaseScenario {
         }
         return result;
     }
-
-
 }

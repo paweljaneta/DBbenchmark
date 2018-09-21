@@ -1,7 +1,8 @@
-package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.complexScenarios;
+package pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.complexScenarios;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoClient;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoTransaction;
@@ -20,12 +21,11 @@ import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlTransaction;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlClientRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlProductRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.SqlTransactionRepository;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
 
 import java.util.*;
 
 @Component
-public class SumFromTransactionsForClientCity extends BaseScenario {
+public class SumFromTransactionsForClientCityScenarioMethods {
     @Autowired
     private SqlClientRepository sqlClientRepository;
     @Autowired
@@ -47,39 +47,12 @@ public class SumFromTransactionsForClientCity extends BaseScenario {
     @Autowired
     private NeoTransactionRepository neoTransactionRepository;
 
-    @Override
-    public void before() {
-
-    }
-
-    @Override
-    public void execute() {
-        List<SqlClient> sqlClients = getAllSqlClients();
-        Map<String, List<SqlClient>> citySqlClientsMap = sqlGetAllClientCities(sqlClients);
-        Map<String, Float> citySqlSumMap = sqlCalculateSumForCity(citySqlClientsMap);
-
-        List<MongoClient> mongoClients = getAllMongoClients();
-        Map<String, List<MongoClient>> cityMongoClientsMap = mongoGetAllClientCities(mongoClients);
-        Map<String, Float> cityMongoSumMap = mongoCalculateSumForCity(cityMongoClientsMap);
-
-        Iterable<NeoClient> neoClients = getAllNeoClients();
-        Map<String, List<NeoClient>> cityClientsMap = neoGetAllClientCities(neoClients);
-        Map<String, Float> cityNeoSumMap = neoCalculateSumForCity(cityClientsMap);
-
-        System.out.println(citySqlSumMap);
-        System.out.println(cityMongoSumMap);
-        System.out.println(cityNeoSumMap);
-    }
-
-    @Override
-    public void after() {
-
-    }
-
+    @ExecTimeMeasure
     public List<SqlClient> getAllSqlClients() {
         return sqlClientRepository.findAll();
     }
 
+    @ExecTimeMeasure
     public Map<String, List<SqlClient>> sqlGetAllClientCities(List<SqlClient> clients) {
         Map<String, List<SqlClient>> result = new HashMap<>();
         for (SqlClient client : clients) {
@@ -95,7 +68,7 @@ public class SumFromTransactionsForClientCity extends BaseScenario {
         return result;
     }
 
-    public Float sqlCalculateTransactionSumForClients(List<SqlClient> clients) {
+    private Float sqlCalculateTransactionSumForClients(List<SqlClient> clients) {
         float sum = 0.0f;
         for (SqlClient client : clients) {
             List<SqlTransaction> transactionsByStoreId = sqlTransactionRepository.findAllByClientId(client.getId());
@@ -109,6 +82,7 @@ public class SumFromTransactionsForClientCity extends BaseScenario {
         return sum;
     }
 
+    @ExecTimeMeasure
     public Map<String, Float> sqlCalculateSumForCity(Map<String, List<SqlClient>> cityClientsMap) {
         Map<String, Float> result = new HashMap<>();
         Set<String> keys = cityClientsMap.keySet();
@@ -118,11 +92,12 @@ public class SumFromTransactionsForClientCity extends BaseScenario {
         return result;
     }
 
-
+    @ExecTimeMeasure
     public List<MongoClient> getAllMongoClients() {
         return mongoClientRepository.findAll();
     }
 
+    @ExecTimeMeasure
     public Map<String, List<MongoClient>> mongoGetAllClientCities(List<MongoClient> clients) {
         Map<String, List<MongoClient>> result = new HashMap<>();
         for (MongoClient client : clients) {
@@ -139,7 +114,7 @@ public class SumFromTransactionsForClientCity extends BaseScenario {
         return result;
     }
 
-    public Float mongoCalculateTransactionSumForClients(List<MongoClient> clients) {
+    private Float mongoCalculateTransactionSumForClients(List<MongoClient> clients) {
         float sum = 0.0f;
         for (MongoClient client : clients) {
             List<MongoTransaction> transactionsByStoreId = mongoTransactionRepository.findAllByClientId(client.getId());
@@ -153,6 +128,7 @@ public class SumFromTransactionsForClientCity extends BaseScenario {
         return sum;
     }
 
+    @ExecTimeMeasure
     public Map<String, Float> mongoCalculateSumForCity(Map<String, List<MongoClient>> cityClientsMap) {
         Map<String, Float> result = new HashMap<>();
         Set<String> keys = cityClientsMap.keySet();
@@ -162,11 +138,12 @@ public class SumFromTransactionsForClientCity extends BaseScenario {
         return result;
     }
 
-
+    @ExecTimeMeasure
     public Iterable<NeoClient> getAllNeoClients() {
         return neoClientRepository.findAll();
     }
 
+    @ExecTimeMeasure
     public Map<String, List<NeoClient>> neoGetAllClientCities(Iterable<NeoClient> clients) {
         Map<String, List<NeoClient>> result = new HashMap<>();
         for (NeoClient client : clients) {
@@ -182,7 +159,7 @@ public class SumFromTransactionsForClientCity extends BaseScenario {
         return result;
     }
 
-    public Float neoCalculateTransactionSumForClients(List<NeoClient> clients) {
+    private Float neoCalculateTransactionSumForClients(List<NeoClient> clients) {
         float sum = 0.0f;
         for (NeoClient client : clients) {
             List<NeoTransaction> transactionsByStoreId = neoTransactionRepository.findAllByClientId(client.getId());
@@ -196,6 +173,7 @@ public class SumFromTransactionsForClientCity extends BaseScenario {
         return sum;
     }
 
+    @ExecTimeMeasure
     public Map<String, Float> neoCalculateSumForCity(Map<String, List<NeoClient>> cityClientsMap) {
         Map<String, Float> result = new HashMap<>();
         Set<String> keys = cityClientsMap.keySet();

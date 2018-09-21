@@ -5,10 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.complexScenarios.SumFromTransactionForStoreScenario;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.complexScenarios.SumFromTransactionsByStoreCityScenario;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.complexScenarios.SumFromTransactionsForClientCity;
-import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.complexScenarios.SumFromTransactionsForDeliveryMode;
+import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.complexScenarios.*;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.simpleScenarios.*;
 
 import java.util.ArrayList;
@@ -25,7 +22,8 @@ public class TestRunner {
                       GetProductsScenario getProductsScenario, LoadScenario loadScenario, LoggedBuyScenario loggedBuyScenario,
                       RemoveObsoleteCartsScenario removeObsoleteCartsScenario,
                       SumFromTransactionForStoreScenario sumFromTransactionForStoreScenario, SumFromTransactionsByStoreCityScenario sumFromTransactionsByStoreCityScenario,
-                      SumFromTransactionsForClientCity sumFromTransactionsForClientCity, SumFromTransactionsForDeliveryMode sumFromTransactionsForDeliveryMode) {
+                      SumFromTransactionsForClientCityScenario sumFromTransactionsForClientCityScenario, SumFromTransactionsForDeliveryModeScenario sumFromTransactionsForDeliveryModeScenario,
+                      CashSpentForClientScenario cashSpentForClientScenario, InWhichShopClientMadeShoppingOftenScenario inWhichShopClientMadeShoppingOftenScenario) {
 
         /*loadScenario.setNoOfRepeats(1);
         scenarios.add(loadScenario); //działa
@@ -59,11 +57,17 @@ public class TestRunner {
     /*    sumFromTransactionsByStoreCityScenario.setNoOfRepeats(1);
         scenarios.add(sumFromTransactionsByStoreCityScenario); */ //działa
 
-       /* sumFromTransactionsForClientCity.setNoOfRepeats(1);
-        scenarios.add(sumFromTransactionsForClientCity);*/  //działa
+        /*sumFromTransactionsForClientCityScenario.setNoOfRepeats(1);
+        scenarios.add(sumFromTransactionsForClientCityScenario); */ //działa
 
-        sumFromTransactionsForDeliveryMode.setNoOfRepeats(1);
-        scenarios.add(sumFromTransactionsForDeliveryMode);
+       /* sumFromTransactionsForDeliveryModeScenario.setNoOfRepeats(1);
+        scenarios.add(sumFromTransactionsForDeliveryModeScenario);*/  //działa?
+
+        /*cashSpentForClientScenario.setNoOfRepeats(1);
+        scenarios.add(cashSpentForClientScenario);*/ //działa
+
+        inWhichShopClientMadeShoppingOftenScenario.setNoOfRepeats(1);
+        scenarios.add(inWhichShopClientMadeShoppingOftenScenario);
     }
 
     @EventListener(ApplicationReadyEvent.class)
