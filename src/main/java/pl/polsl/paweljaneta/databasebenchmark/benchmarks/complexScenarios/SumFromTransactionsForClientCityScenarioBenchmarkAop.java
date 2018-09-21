@@ -21,7 +21,7 @@ public class SumFromTransactionsForClientCityScenarioBenchmarkAop {
         this.logger = logger;
     }
 
-    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.complexScenarios.SumFromTransactionsForClientCityScenarioMethods*(..))&&@annotation(pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure)")
+    @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.complexScenarios.SumFromTransactionsForClientCityScenarioMethods.*(..))&&@annotation(pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         return logger.log(pjp, executionTimeLogger);
     }
