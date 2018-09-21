@@ -8,7 +8,6 @@ import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
 @Component
 public class LoadScenario extends BaseScenario {
 
-
     private DataCreator dataCreator;
 
     @Autowired
