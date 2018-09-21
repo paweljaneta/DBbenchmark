@@ -8,13 +8,11 @@ import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.entities.MongoTransaction;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoClientRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoDiscountRepository;
-import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoProductRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.MongoTransactionRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoClient;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoProduct;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.entities.NeoTransaction;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoClientRepository;
-import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoProductRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.NeoTransactionRepository;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlClient;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.entities.SqlProduct;
@@ -38,15 +36,12 @@ public class CashSpentForClientScenarioMethods {
     @Autowired
     private MongoClientRepository mongoClientRepository;
     @Autowired
-    private MongoProductRepository mongoProductRepository;
-    @Autowired
     private MongoDiscountRepository mongoDiscountRepository;
     @Autowired
     private NeoTransactionRepository neoTransactionRepository;
     @Autowired
     private NeoClientRepository neoClientRepository;
-    @Autowired
-    private NeoProductRepository neoProductRepository;
+
 
     @ExecTimeMeasure
     public List<SqlClient> getSqlClients() {
