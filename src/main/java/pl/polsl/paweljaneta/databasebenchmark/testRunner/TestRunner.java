@@ -25,46 +25,45 @@ public class TestRunner {
                       SumFromTransactionsForClientCityScenario sumFromTransactionsForClientCityScenario, SumFromTransactionsForDeliveryModeScenario sumFromTransactionsForDeliveryModeScenario,
                       CashSpentForClientScenario cashSpentForClientScenario, InWhichShopClientMadeShoppingOftenScenario inWhichShopClientMadeShoppingOftenScenario) {
 
-        /*loadScenario.setNoOfRepeats(1);
-        scenarios.add(loadScenario); //działa
+        loadScenario.setNoOfRepeats(1);
+        scenarios.add(loadScenario);
 
         addProductToStoreScenario.setNoOfRepeats(1);
-        scenarios.add(addProductToStoreScenario); //działa
+        scenarios.add(addProductToStoreScenario);
 
         anonymousBuyScenario.setNoOfRepeats(1);
-        scenarios.add(anonymousBuyScenario);  //działa spróbować zoptymalizować pobieranie produktów mongo
+        scenarios.add(anonymousBuyScenario);
 
         clientAddressEditScenario.setNoOfRepeats(1);
-        scenarios.add(clientAddressEditScenario);  //działa
+        scenarios.add(clientAddressEditScenario);
 
         clientDataEditScenario.setNoOfRepeats(1);
-        scenarios.add(clientDataEditScenario); //działa
+        scenarios.add(clientDataEditScenario);
 
         getProductsScenario.setNoOfRepeats(1);
-        scenarios.add(getProductsScenario);  //działa
+        scenarios.add(getProductsScenario);
 
         loggedBuyScenario.setNoOfRepeats(1);
-        scenarios.add(loggedBuyScenario); //działa + jak w anonimowym
+        scenarios.add(loggedBuyScenario);
 
         removeObsoleteCartsScenario.setNoOfRepeats(1);
-        scenarios.add(removeObsoleteCartsScenario); //działa*/
+        scenarios.add(removeObsoleteCartsScenario);
 
 
+        sumFromTransactionForStoreScenario.setNoOfRepeats(1);
+        scenarios.add(sumFromTransactionForStoreScenario);
 
-       /* sumFromTransactionForStoreScenario.setNoOfRepeats(1);
-        scenarios.add(sumFromTransactionForStoreScenario);*/ //działa
+        sumFromTransactionsByStoreCityScenario.setNoOfRepeats(1);
+        scenarios.add(sumFromTransactionsByStoreCityScenario);
 
-    /*    sumFromTransactionsByStoreCityScenario.setNoOfRepeats(1);
-        scenarios.add(sumFromTransactionsByStoreCityScenario); */ //działa
+        sumFromTransactionsForClientCityScenario.setNoOfRepeats(1);
+        scenarios.add(sumFromTransactionsForClientCityScenario);
 
-        /*sumFromTransactionsForClientCityScenario.setNoOfRepeats(1);
-        scenarios.add(sumFromTransactionsForClientCityScenario); */ //działa
+        sumFromTransactionsForDeliveryModeScenario.setNoOfRepeats(1);
+        scenarios.add(sumFromTransactionsForDeliveryModeScenario);
 
-       /* sumFromTransactionsForDeliveryModeScenario.setNoOfRepeats(1);
-        scenarios.add(sumFromTransactionsForDeliveryModeScenario);*/  //działa?
-
-        /*cashSpentForClientScenario.setNoOfRepeats(1);
-        scenarios.add(cashSpentForClientScenario);*/ //działa
+        cashSpentForClientScenario.setNoOfRepeats(1);
+        scenarios.add(cashSpentForClientScenario);
 
         inWhichShopClientMadeShoppingOftenScenario.setNoOfRepeats(1);
         scenarios.add(inWhichShopClientMadeShoppingOftenScenario);
