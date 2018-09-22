@@ -19,7 +19,7 @@ public abstract class BaseScenario {
     public void executeScenario() {
 
         before();
-        for (iteration = 0; iteration <= NO_OF_REPEATS; iteration++) {
+        for (iteration = 1; iteration <= NO_OF_REPEATS; iteration++) {
             try {
                 logger.log(Level.INFO, "--------------------------------------------------------------------------------------------");
                 logger.log(Level.INFO, "Scenario: " + this.getClass().getCanonicalName() + " iteration " + iteration + " of " + NO_OF_REPEATS + " start");
