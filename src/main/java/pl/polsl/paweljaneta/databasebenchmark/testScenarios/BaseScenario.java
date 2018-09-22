@@ -1,5 +1,6 @@
 package pl.polsl.paweljaneta.databasebenchmark.testScenarios;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.exceptionHandler.ExceptionHandler;
@@ -28,6 +29,7 @@ public abstract class BaseScenario {
                 logger.log(Level.INFO, "--------------------------------------------------------------------------------------------");
             } catch (Exception e) {
                 exceptionHandler.addException(iteration, e);
+                logger.log(Level.INFO, "Exception in iteration: " + iteration + System.lineSeparator() + ExceptionUtils.getStackTrace(e) + System.lineSeparator());
             }
         }
         after();
