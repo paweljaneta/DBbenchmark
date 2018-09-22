@@ -2,8 +2,12 @@ package pl.polsl.paweljaneta.databasebenchmark.testScenarios;
 
 import org.springframework.stereotype.Component;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Component
 public abstract class BaseScenario {
+    Logger logger = Logger.getLogger(this.getClass().getName());
     private int NO_OF_REPEATS = 1;
 
     public void executeScenario() {

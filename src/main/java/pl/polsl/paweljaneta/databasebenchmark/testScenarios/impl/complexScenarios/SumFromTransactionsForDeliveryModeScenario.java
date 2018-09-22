@@ -7,9 +7,13 @@ import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.complexScenarios.SumFromTransactionsForDeliveryModeScenarioMethods;
 
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class SumFromTransactionsForDeliveryModeScenario extends BaseScenario {
+    Logger logger = Logger.getLogger(this.getClass().getName());
+
     @Autowired
     private SumFromTransactionsForDeliveryModeScenarioMethods methods;
 
@@ -24,9 +28,9 @@ public class SumFromTransactionsForDeliveryModeScenario extends BaseScenario {
         Map<DeliveryMode, Float> deliveryModeMongoSumMap = methods.mongoGetTransactionsSumForDeliveryMode();
         Map<DeliveryMode, Float> deliveryModeNeoSumMap = methods.neoGetTransactionsSumForDeliveryMode();
 
-        logger.log(Level.INFO, deliveryModeSqlSumMap);
-        logger.log(Level.INFO, deliveryModeMongoSumMap);
-        logger.log(Level.INFO, deliveryModeNeoSumMap);
+        logger.log(Level.INFO, deliveryModeSqlSumMap.toString());
+        logger.log(Level.INFO, deliveryModeMongoSumMap.toString());
+        logger.log(Level.INFO, deliveryModeNeoSumMap.toString());
     }
 
     @Override

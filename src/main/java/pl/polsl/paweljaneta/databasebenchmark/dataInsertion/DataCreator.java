@@ -22,9 +22,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class DataCreator {
+    Logger logger = Logger.getLogger(this.getClass().getName());
+
     private final DatabaseToInsert databaseToInsert = DatabaseToInsert.ALL;
 
     private List<SqlAddress> sqlClientAddresses = new ArrayList<>();
@@ -112,7 +116,7 @@ public class DataCreator {
         createTransactionData();
         createProductsInStoresData();
         createNewLists();
-        "Data loading finished");
+        logger.log(Level.INFO, "Data loading finished");
     }
 
     private void createNewLists() {
