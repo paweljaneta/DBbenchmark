@@ -22,13 +22,13 @@ public class ExecutionTimeLogger {
             String date = df.format(new Date());
             FileWriter fileWriter = new FileWriter("benchmarkResults\\" + date + fileName + ".csv");
             printWriter = new PrintWriter(fileWriter, true);
-            printWriter.println("Time" + separator + "method" + separator + "exec time");
+            printWriter.println("Time" + separator + "method" + separator + "exec time" + separator + "iteration");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void logExecutionTime(String methodName, Long durationMs) {
-        printWriter.println(new Date().getTime() + separator + methodName + separator + durationMs);
+    public void logExecutionTime(String methodName, Long durationMs, int iteration) {
+        printWriter.println(new Date().getTime() + separator + methodName + separator + durationMs + separator + iteration);
     }
 }

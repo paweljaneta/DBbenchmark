@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import pl.polsl.paweljaneta.databasebenchmark.benchmarks.AopLoggingBaseClass;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.utils.ExecutionTimeLogger;
+import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.simpleScenarios.AnonymousBuyScenario;
 
 @Aspect
 @Configuration
 public class AnonymousBuyScenarioBenchmarkAop {
     private ExecutionTimeLogger executionTimeLogger;
     private AopLoggingBaseClass logger;
+
+    @Autowired
+    private AnonymousBuyScenario scenarioClass;
 
     @Autowired
     public AnonymousBuyScenarioBenchmarkAop(ExecutionTimeLogger executionTimeLogger, AopLoggingBaseClass logger) {
@@ -23,6 +27,6 @@ public class AnonymousBuyScenarioBenchmarkAop {
 
     @Around("execution(* pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.simpleScenarios.AnonymousBuyScenarioMethods.*(..))&&@annotation(pl.polsl.paweljaneta.databasebenchmark.annotations.ExecTimeMeasure)")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
-        return logger.log(pjp, executionTimeLogger);
+        return logger.log(pjp, executionTimeLogger, scenarioClass.getIteration());
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import pl.polsl.paweljaneta.databasebenchmark.exceptionHandler.ExceptionHandler;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.BaseScenario;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.complexScenarios.*;
 import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.simpleScenarios.*;
@@ -15,6 +16,8 @@ import java.util.logging.Logger;
 
 @Component
 public class TestRunner {
+    @Autowired
+    private ExceptionHandler exceptionHandler;
 
     private List<BaseScenario> scenarios = new ArrayList<>();
     Logger logger = Logger.getLogger(this.getClass().getName());
@@ -103,5 +106,10 @@ public class TestRunner {
             scenario.executeScenario();
         }
         logger.log(Level.INFO, "Tests finished");
+
+        if (exceptionHandler.getExceptions().size() > 0) {
+            logger.log(Level.INFO, "Exceptions:");
+            logger.log(Level.INFO, exceptionHandler.getExceptions().toString());
+        }
     }
 }
