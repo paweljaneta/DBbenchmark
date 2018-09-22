@@ -73,3 +73,6 @@ spring:
 
 server:
   port: 9000
+logging:
+  path: /log/
+

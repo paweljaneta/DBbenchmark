@@ -13,11 +13,14 @@ import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.com
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class InWhichShopClientMadeShoppingOftenScenario extends BaseScenario {
     @Autowired
     private InWhichShopClientMadeShoppingOftenScenarioMethods methods;
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Override
     public void before() {
@@ -35,9 +38,9 @@ public class InWhichShopClientMadeShoppingOftenScenario extends BaseScenario {
         Iterable<NeoClient> neoClients = methods.getNeoClients();
         Map<NeoClient, NeoStore> mostPopularNeoStoreForClient = methods.getMostPopularNeoStoreForClient(neoClients);
 
-        System.out.println(mostPopularSqlStoreForClient);
-        System.out.println(mostPopularMongoStoreForClient);
-        System.out.println(mostPopularNeoStoreForClient);
+        logger.log(Level.INFO, mostPopularSqlStoreForClient.toString());
+        logger.log(Level.INFO, mostPopularMongoStoreForClient.toString());
+        logger.log(Level.INFO, mostPopularNeoStoreForClient.toString());
     }
 
     @Override

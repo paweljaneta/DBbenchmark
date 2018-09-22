@@ -6,8 +6,12 @@ import pl.polsl.paweljaneta.databasebenchmark.model.mongo.repository.*;
 import pl.polsl.paweljaneta.databasebenchmark.model.neo4j.repository.*;
 import pl.polsl.paweljaneta.databasebenchmark.model.sql.repository.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Component
 public class DatabaseCleaner {
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     private SqlAddressRepository sqladdressRepository;
@@ -73,168 +77,168 @@ public class DatabaseCleaner {
     private NeoProductsInStoresRepository neoproductsInStoresRepository;
 
     public void cleanSql() {
-        System.out.println("cleanSql");
-        System.out.println("sqlshipmentRepository clean start");
+        logger.log(Level.INFO, "cleanSql");
+        logger.log(Level.INFO, "sqlshipmentRepository clean start");
 
         sqlshipmentRepository.deleteAllInBatch();
 
-        System.out.println("sqlshipmentRepository clean finish");
-        System.out.println("sqlorderRepository clean start");
+        logger.log(Level.INFO, "sqlshipmentRepository clean finish");
+        logger.log(Level.INFO, "sqlorderRepository clean start");
 
         sqlorderRepository.deleteAllInBatch();
 
-        System.out.println("sqlorderRepository clean finish");
-        System.out.println("sqlcartRepository clean start");
+        logger.log(Level.INFO, "sqlorderRepository clean finish");
+        logger.log(Level.INFO, "sqlcartRepository clean start");
 
         sqlcartRepository.deleteAllInBatch();
 
-        System.out.println("sqlcartRepository clean finish");
-        System.out.println("sqltransactionRepository clean start");
+        logger.log(Level.INFO, "sqlcartRepository clean finish");
+        logger.log(Level.INFO, "sqltransactionRepository clean start");
 
         sqltransactionRepository.deleteAllInBatch();
 
-        System.out.println("sqltransactionRepository clean finish");
-        System.out.println("sqlproductsInStoresRepository clean start");
+        logger.log(Level.INFO, "sqltransactionRepository clean finish");
+        logger.log(Level.INFO, "sqlproductsInStoresRepository clean start");
 
         sqlproductsInStoresRepository.deleteAllInBatch();
 
-        System.out.println("sqlproductsInStoresRepository clean finish");
-        System.out.println("sqlproductRepository clean start");
+        logger.log(Level.INFO, "sqlproductsInStoresRepository clean finish");
+        logger.log(Level.INFO, "sqlproductRepository clean start");
 
         sqlproductRepository.deleteAllInBatch();
 
-        System.out.println("sqlproductRepository clean finish");
-        System.out.println("sqldiscountRepository clean start");
+        logger.log(Level.INFO, "sqlproductRepository clean finish");
+        logger.log(Level.INFO, "sqldiscountRepository clean start");
 
         sqldiscountRepository.deleteAllInBatch();
 
-        System.out.println("sqldiscountRepository clean finish");
-        System.out.println("sqlclientRepository clean start");
+        logger.log(Level.INFO, "sqldiscountRepository clean finish");
+        logger.log(Level.INFO, "sqlclientRepository clean start");
 
         sqlclientRepository.deleteAllInBatch();
 
-        System.out.println("sqlclientRepository clean finish");
-        System.out.println("sqlstoreRepository clean start");
+        logger.log(Level.INFO, "sqlclientRepository clean finish");
+        logger.log(Level.INFO, "sqlstoreRepository clean start");
 
         sqlstoreRepository.deleteAllInBatch();
 
-        System.out.println("sqlstoreRepository clean finish");
-        System.out.println("sqladdressRepository clean start");
+        logger.log(Level.INFO, "sqlstoreRepository clean finish");
+        logger.log(Level.INFO, "sqladdressRepository clean start");
 
         sqladdressRepository.deleteAllInBatch();
 
-        System.out.println("sqladdressRepository clean finish");
-        System.out.println("sql clean finish");
+        logger.log(Level.INFO, "sqladdressRepository clean finish");
+        logger.log(Level.INFO, "sql clean finish");
     }
 
     public void cleanMongo() {
-        System.out.println("cleanMongo");
-        System.out.println("mongoaddressRepository clean start");
+        logger.log(Level.INFO, "cleanMongo");
+        logger.log(Level.INFO, "mongoaddressRepository clean start");
 
         mongoaddressRepository.deleteAll();
 
-        System.out.println("mongoaddressRepository clean finish");
-        System.out.println("mongoclientRepository clean start");
+        logger.log(Level.INFO, "mongoaddressRepository clean finish");
+        logger.log(Level.INFO, "mongoclientRepository clean start");
 
         mongoclientRepository.deleteAll();
 
-        System.out.println("mongoclientRepository clean finish");
-        System.out.println("mongostoreRepository clean start");
+        logger.log(Level.INFO, "mongoclientRepository clean finish");
+        logger.log(Level.INFO, "mongostoreRepository clean start");
 
         mongostoreRepository.deleteAll();
 
-        System.out.println("mongostoreRepository clean finish");
-        System.out.println("mongodiscountRepository clean start");
+        logger.log(Level.INFO, "mongostoreRepository clean finish");
+        logger.log(Level.INFO, "mongodiscountRepository clean start");
 
         mongodiscountRepository.deleteAll();
 
-        System.out.println("mongodiscountRepository clean finish");
-        System.out.println("mongoproductRepository clean start");
+        logger.log(Level.INFO, "mongodiscountRepository clean finish");
+        logger.log(Level.INFO, "mongoproductRepository clean start");
 
         mongoproductRepository.deleteAll();
 
-        System.out.println("mongoproductRepository clean finish");
-        System.out.println("mongocartRepository clean start");
+        logger.log(Level.INFO, "mongoproductRepository clean finish");
+        logger.log(Level.INFO, "mongocartRepository clean start");
 
         mongocartRepository.deleteAll();
 
-        System.out.println("mongocartRepository clean finish");
-        System.out.println("mongoorderRepository clean start");
+        logger.log(Level.INFO, "mongocartRepository clean finish");
+        logger.log(Level.INFO, "mongoorderRepository clean start");
 
         mongoorderRepository.deleteAll();
 
-        System.out.println("mongoorderRepository clean finish");
-        System.out.println("mongoshipmentRepository clean start");
+        logger.log(Level.INFO, "mongoorderRepository clean finish");
+        logger.log(Level.INFO, "mongoshipmentRepository clean start");
 
         mongoshipmentRepository.deleteAll();
 
-        System.out.println("mongoshipmentRepository clean finish");
-        System.out.println("mongotransactionRepository clean start");
+        logger.log(Level.INFO, "mongoshipmentRepository clean finish");
+        logger.log(Level.INFO, "mongotransactionRepository clean start");
 
         mongotransactionRepository.deleteAll();
 
-        System.out.println("mongotransactionRepository clean finish");
-        System.out.println("mongoproductsInStoresRepository clean start");
+        logger.log(Level.INFO, "mongotransactionRepository clean finish");
+        logger.log(Level.INFO, "mongoproductsInStoresRepository clean start");
 
         mongoproductsInStoresRepository.deleteAll();
 
-        System.out.println("mongoproductsInStoresRepository clean finish");
-        System.out.println("mogno clean finish");
+        logger.log(Level.INFO, "mongoproductsInStoresRepository clean finish");
+        logger.log(Level.INFO, "mogno clean finish");
     }
 
     public void cleanNeo() {
-        System.out.println("cleanNeo");
-        System.out.println("neoaddressRepository clean start");
+        logger.log(Level.INFO, "cleanNeo");
+        logger.log(Level.INFO, "neoaddressRepository clean start");
 
         neoaddressRepository.deleteAll();
 
-        System.out.println("neoaddressRepository clean finish");
-        System.out.println("neoclientRepository clean start");
+        logger.log(Level.INFO, "neoaddressRepository clean finish");
+        logger.log(Level.INFO, "neoclientRepository clean start");
 
         neoclientRepository.deleteAll();
 
-        System.out.println("neoclientRepository clean finish");
-        System.out.println("neostoreRepository clean start");
+        logger.log(Level.INFO, "neoclientRepository clean finish");
+        logger.log(Level.INFO, "neostoreRepository clean start");
 
         neostoreRepository.deleteAll();
 
-        System.out.println("neostoreRepository clean finish");
-        System.out.println("neodiscountRepository clean start");
+        logger.log(Level.INFO, "neostoreRepository clean finish");
+        logger.log(Level.INFO, "neodiscountRepository clean start");
 
         neodiscountRepository.deleteAll();
 
-        System.out.println("neodiscountRepository clean finish");
-        System.out.println("neoproductRepository clean start");
+        logger.log(Level.INFO, "neodiscountRepository clean finish");
+        logger.log(Level.INFO, "neoproductRepository clean start");
 
         neoproductRepository.deleteAll();
 
-        System.out.println("neoproductRepository clean finish");
-        System.out.println("neocartRepository clean start");
+        logger.log(Level.INFO, "neoproductRepository clean finish");
+        logger.log(Level.INFO, "neocartRepository clean start");
 
         neocartRepository.deleteAll();
 
-        System.out.println("neocartRepository clean finish");
-        System.out.println("neoorderRepository clean start");
+        logger.log(Level.INFO, "neocartRepository clean finish");
+        logger.log(Level.INFO, "neoorderRepository clean start");
 
         neoorderRepository.deleteAll();
 
-        System.out.println("neoorderRepository clean finish");
-        System.out.println("neoshipmentRepository clean start");
+        logger.log(Level.INFO, "neoorderRepository clean finish");
+        logger.log(Level.INFO, "neoshipmentRepository clean start");
 
         neoshipmentRepository.deleteAll();
 
-        System.out.println("neoshipmentRepository clean finish");
-        System.out.println("neotransactionRepository clean start");
+        logger.log(Level.INFO, "neoshipmentRepository clean finish");
+        logger.log(Level.INFO, "neotransactionRepository clean start");
 
         neotransactionRepository.deleteAll();
 
-        System.out.println("neotransactionRepository clean finish");
-        System.out.println("neoproductsInStoresRepository clean start");
+        logger.log(Level.INFO, "neotransactionRepository clean finish");
+        logger.log(Level.INFO, "neoproductsInStoresRepository clean start");
 
         neoproductsInStoresRepository.deleteAll();
 
-        System.out.println("neoproductsInStoresRepository clean finish");
-        System.out.println("neo clean finish");
+        logger.log(Level.INFO, "neoproductsInStoresRepository clean finish");
+        logger.log(Level.INFO, "neo clean finish");
     }
 
     public void cleanAll() {

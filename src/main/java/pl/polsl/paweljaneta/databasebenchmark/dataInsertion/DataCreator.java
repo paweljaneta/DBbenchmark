@@ -112,7 +112,7 @@ public class DataCreator {
         createTransactionData();
         createProductsInStoresData();
         createNewLists();
-        System.out.println("Data loading finished");
+        "Data loading finished");
     }
 
     private void createNewLists() {

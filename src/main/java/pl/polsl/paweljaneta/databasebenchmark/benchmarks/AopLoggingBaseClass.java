@@ -6,18 +6,21 @@ import org.springframework.stereotype.Component;
 import pl.polsl.paweljaneta.databasebenchmark.dataInsertion.utils.ExecutionTimeLogger;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 @Scope("prototype")
 public class AopLoggingBaseClass {
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     public Object log(ProceedingJoinPoint pjp, ExecutionTimeLogger executionTimeLogger) throws Throwable {
-        System.out.println(new Date() + " START: " + pjp.getTarget().getClass().getCanonicalName() + "." + pjp.getSignature().getName() + "()");
+        logger.log(Level.INFO, new Date() + " START: " + pjp.getTarget().getClass().getCanonicalName() + "." + pjp.getSignature().getName() + "()");
         long startTime = System.currentTimeMillis();
         Object result = pjp.proceed();
         long endTime = System.currentTimeMillis();
         executionTimeLogger.logExecutionTime(pjp.getSignature().getName(), (endTime - startTime));
-        System.out.println(new Date() + " " + pjp.getTarget().getClass().getCanonicalName() + '.' + pjp.getSignature().getName() + "(): " + (endTime - startTime) + "ms");
+        logger.log(Level.INFO, new Date() + " " + pjp.getTarget().getClass().getCanonicalName() + '.' + pjp.getSignature().getName() + "(): " + (endTime - startTime) + "ms");
         return result;
     }
 }

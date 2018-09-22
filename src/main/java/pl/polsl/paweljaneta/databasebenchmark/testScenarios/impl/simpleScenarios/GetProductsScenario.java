@@ -14,12 +14,15 @@ import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.sim
 
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class GetProductsScenario extends BaseScenario {
 
     private DataConfig dataConfig;
     private GetProductsScenarioMethods productsScenarioMethods;
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
 
     @Autowired
@@ -50,8 +53,8 @@ public class GetProductsScenario extends BaseScenario {
         List<ProductDTO> mongoProductsFromStore = productsScenarioMethods.getMongoProductsFromStore(mongoStore);
         List<ProductDTO> neoProductsFromStore = productsScenarioMethods.getNeoProductsFromStore(neoStore);
 
-        System.out.println(sqlAddressFromStore.getStreetNumber() + " " + mongoAddressFromStore.getStreetNumber() + " " + neoAddressFromStore.getStreetNumber());
-        System.out.println(sqlProductsFromStore.size() + " " + mongoProductsFromStore.size() + " " + neoProductsFromStore.size());
+        logger.log(Level.INFO, sqlAddressFromStore.getStreetNumber() + " " + mongoAddressFromStore.getStreetNumber() + " " + neoAddressFromStore.getStreetNumber());
+        logger.log(Level.INFO, sqlProductsFromStore.size() + " " + mongoProductsFromStore.size() + " " + neoProductsFromStore.size());
     }
 
     @Override

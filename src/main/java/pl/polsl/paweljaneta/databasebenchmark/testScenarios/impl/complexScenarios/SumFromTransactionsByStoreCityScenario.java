@@ -35,9 +35,9 @@ public class SumFromTransactionsByStoreCityScenario extends BaseScenario {
         Map<String, List<NeoStore>> cityNeoStoresMap = methods.neoGetAllStoreCities(neoStores);
         Map<String, Float> cityNeoSumMap = methods.neoCalculateSumForCity(cityNeoStoresMap);
 
-        System.out.println(cityMongoSumMap);
-        System.out.println(citySqlSumMap);
-        System.out.println(cityNeoSumMap);
+        logger.log(Level.INFO, cityMongoSumMap);
+        logger.log(Level.INFO, citySqlSumMap);
+        logger.log(Level.INFO, cityNeoSumMap);
     }
 
     @Override

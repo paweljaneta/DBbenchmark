@@ -10,11 +10,14 @@ import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.simpleScenarios
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class TestRunner {
 
     private List<BaseScenario> scenarios = new ArrayList<>();
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     public TestRunner(AddProductToStoreScenario addProductToStoreScenario, AnonymousBuyScenario anonymousBuyScenario,
@@ -25,70 +28,69 @@ public class TestRunner {
                       SumFromTransactionsForClientCityScenario sumFromTransactionsForClientCityScenario, SumFromTransactionsForDeliveryModeScenario sumFromTransactionsForDeliveryModeScenario,
                       CashSpentForClientScenario cashSpentForClientScenario, InWhichShopClientMadeShoppingOftenScenario inWhichShopClientMadeShoppingOftenScenario) {
 
-        loadScenario.setNoOfRepeats(10);
+        loadScenario.setNoOfRepeats(1);
         scenarios.add(loadScenario);
 
         addProductToStoreScenario.setNoOfRepeats(100);
         scenarios.add(addProductToStoreScenario);
 
-        loadScenario.setNoOfRepeats(100);
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         anonymousBuyScenario.setNoOfRepeats(100);
         scenarios.add(anonymousBuyScenario);
 
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         clientAddressEditScenario.setNoOfRepeats(100);
         scenarios.add(clientAddressEditScenario);
 
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         clientDataEditScenario.setNoOfRepeats(100);
         scenarios.add(clientDataEditScenario);
 
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         getProductsScenario.setNoOfRepeats(100);
         scenarios.add(getProductsScenario);
 
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         loggedBuyScenario.setNoOfRepeats(100);
         scenarios.add(loggedBuyScenario);
 
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         removeObsoleteCartsScenario.setNoOfRepeats(100);
         scenarios.add(removeObsoleteCartsScenario);
 
         //complex
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         sumFromTransactionForStoreScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionForStoreScenario);
 
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         sumFromTransactionsByStoreCityScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionsByStoreCityScenario);
 
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         sumFromTransactionsForClientCityScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionsForClientCityScenario);
 
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         sumFromTransactionsForDeliveryModeScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionsForDeliveryModeScenario);
 
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         cashSpentForClientScenario.setNoOfRepeats(100);
         scenarios.add(cashSpentForClientScenario);
 
-        scenarios.add(loadScenario);
+//        scenarios.add(loadScenario);
 
         inWhichShopClientMadeShoppingOftenScenario.setNoOfRepeats(100);
         scenarios.add(inWhichShopClientMadeShoppingOftenScenario);
@@ -96,9 +98,10 @@ public class TestRunner {
 
     @EventListener(ApplicationReadyEvent.class)
     public void runTests() {
+        logger.log(Level.INFO, "Tests started");
         for (BaseScenario scenario : scenarios) {
             scenario.executeScenario();
         }
-        System.out.println("Tests finished");
+        logger.log(Level.INFO, "Tests finished");
     }
 }

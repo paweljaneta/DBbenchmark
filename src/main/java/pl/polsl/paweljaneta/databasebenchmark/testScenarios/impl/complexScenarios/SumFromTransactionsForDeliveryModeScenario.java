@@ -24,9 +24,9 @@ public class SumFromTransactionsForDeliveryModeScenario extends BaseScenario {
         Map<DeliveryMode, Float> deliveryModeMongoSumMap = methods.mongoGetTransactionsSumForDeliveryMode();
         Map<DeliveryMode, Float> deliveryModeNeoSumMap = methods.neoGetTransactionsSumForDeliveryMode();
 
-        System.out.println(deliveryModeSqlSumMap);
-        System.out.println(deliveryModeMongoSumMap);
-        System.out.println(deliveryModeNeoSumMap);
+        logger.log(Level.INFO, deliveryModeSqlSumMap);
+        logger.log(Level.INFO, deliveryModeMongoSumMap);
+        logger.log(Level.INFO, deliveryModeNeoSumMap);
     }
 
     @Override

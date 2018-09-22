@@ -10,11 +10,14 @@ import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.com
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class CashSpentForClientScenario extends BaseScenario {
     @Autowired
     private CashSpentForClientScenarioMethods methods;
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Override
     public void before() {
@@ -32,9 +35,9 @@ public class CashSpentForClientScenario extends BaseScenario {
         Iterable<NeoClient> neoClients = methods.getNeoClients();
         Map<NeoClient, Float> neoClientPays = methods.getNeoClientPays(neoClients);
 
-        System.out.println(sqlClientPays);
-        System.out.println(mongoClientPays);
-        System.out.println(neoClientPays);
+        logger.log(Level.INFO, sqlClientPays.toString());
+        logger.log(Level.INFO, mongoClientPays.toString());
+        logger.log(Level.INFO, neoClientPays.toString());
     }
 
     @Override

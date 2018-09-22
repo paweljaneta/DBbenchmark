@@ -10,11 +10,15 @@ import pl.polsl.paweljaneta.databasebenchmark.testScenarios.impl.timeMeasure.com
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Component
 public class SumFromTransactionsForClientCityScenario extends BaseScenario {
     @Autowired
     private SumFromTransactionsForClientCityScenarioMethods methods;
+
+    Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Override
     public void before() {
@@ -35,9 +39,9 @@ public class SumFromTransactionsForClientCityScenario extends BaseScenario {
         Map<String, List<NeoClient>> cityClientsMap = methods.neoGetAllClientCities(neoClients);
         Map<String, Float> cityNeoSumMap = methods.neoCalculateSumForCity(cityClientsMap);
 
-        System.out.println(citySqlSumMap);
-        System.out.println(cityMongoSumMap);
-        System.out.println(cityNeoSumMap);
+        logger.log(Level.INFO, citySqlSumMap.toString());
+        logger.log(Level.INFO, cityMongoSumMap.toString());
+        logger.log(Level.INFO, cityNeoSumMap.toString());
     }
 
     @Override
