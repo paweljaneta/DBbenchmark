@@ -54,8 +54,6 @@ public class AddProductToStoreScenario extends BaseScenario {
         addProductToStoreScenarioMethods.sqlCreateProductInStore(sqlProduct, sqlStore, quantity);
         addProductToStoreScenarioMethods.mongoCreateProductInStore(mongoProduct, mongoStore, quantity);
         addProductToStoreScenarioMethods.neoCreateProductInStore(neoProduct, neoStore, quantity);
-
-        throw new RuntimeException("test");
     }
 
     @Override

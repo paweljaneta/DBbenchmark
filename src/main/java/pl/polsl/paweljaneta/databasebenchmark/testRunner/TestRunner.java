@@ -37,63 +37,51 @@ public class TestRunner {
         addProductToStoreScenario.setNoOfRepeats(100);
         scenarios.add(addProductToStoreScenario);
 
-//        scenarios.add(loadScenario);
 
         anonymousBuyScenario.setNoOfRepeats(100);
         scenarios.add(anonymousBuyScenario);
 
-//        scenarios.add(loadScenario);
 
         clientAddressEditScenario.setNoOfRepeats(100);
         scenarios.add(clientAddressEditScenario);
 
-//        scenarios.add(loadScenario);
 
         clientDataEditScenario.setNoOfRepeats(100);
         scenarios.add(clientDataEditScenario);
 
-//        scenarios.add(loadScenario);
 
         getProductsScenario.setNoOfRepeats(100);
         scenarios.add(getProductsScenario);
 
-//        scenarios.add(loadScenario);
 
         loggedBuyScenario.setNoOfRepeats(100);
         scenarios.add(loggedBuyScenario);
 
-//        scenarios.add(loadScenario);
 
         removeObsoleteCartsScenario.setNoOfRepeats(100);
         scenarios.add(removeObsoleteCartsScenario);
 
         //complex
-//        scenarios.add(loadScenario);
 
         sumFromTransactionForStoreScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionForStoreScenario);
 
-//        scenarios.add(loadScenario);
 
         sumFromTransactionsByStoreCityScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionsByStoreCityScenario);
 
-//        scenarios.add(loadScenario);
 
         sumFromTransactionsForClientCityScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionsForClientCityScenario);
 
-//        scenarios.add(loadScenario);
 
         sumFromTransactionsForDeliveryModeScenario.setNoOfRepeats(100);
         scenarios.add(sumFromTransactionsForDeliveryModeScenario);
 
-//        scenarios.add(loadScenario);
 
         cashSpentForClientScenario.setNoOfRepeats(100);
         scenarios.add(cashSpentForClientScenario);
 
-//        scenarios.add(loadScenario);
 
         inWhichShopClientMadeShoppingOftenScenario.setNoOfRepeats(100);
         scenarios.add(inWhichShopClientMadeShoppingOftenScenario);
